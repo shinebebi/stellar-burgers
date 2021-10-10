@@ -1,0 +1,27 @@
+.windowConstructor {
+    width: 600px;
+    max-height: 800px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+    margin-bottom: 40px;
+}
+.buns {
+    margin-left: 22px;
+}
+
+.makeOrder__container {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    margin-left: 170px;
+    margin-top: 40px;
+    margin-bottom: 50px;
+    align-items: center;
+}
+.finalPrice {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

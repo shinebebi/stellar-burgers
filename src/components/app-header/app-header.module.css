@@ -1,0 +1,39 @@
+.header {
+    height: 88px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #1C1C21;
+    margin: 0;
+}
+
+.navigation {
+    display: flex;
+    justify-content: center;
+    width: auto;
+    height: 56px;
+    margin-top: 16px;
+    gap: 8px;
+    margin-right: 112px;
+}
+
+.navigation__point {
+    width: 180px;
+    gap: 8px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 0;
+    margin-top: 16px;
+}
+
+.header__logo {
+    margin-top: 24px;
+}
+
+.header__pa {
+    composes: navigation__point;
+    margin-left: 280px;
+    margin-top: 32px;
+    height: 56px;
+}
+
