@@ -1,7 +1,5 @@
 .windowConstructor {
     width: 600px;
-    max-height: 800px;
-    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     margin-top: 100px;
@@ -9,6 +7,15 @@
 }
 .buns {
     margin-left: 22px;
+}
+
+.constructor_mains {
+    width: 600px;
+    max-height: 500px;
+    overflow-y: scroll;
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
 }
 
 .makeOrder__container {
