@@ -2,10 +2,15 @@ import React from 'react'
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerConstructorStyles from './burger-constructor.module.css';
 import PropTypes from "prop-types";
+import OrderDetails from "../order-details/order-details";
 
 
 function BurgerConstructor (props) {
     const points = ["Соус традиционный галактический", "Мясо бессмертных моллюсков Protostomia", "Плоды Фалленианского дерева", "Хрустящие минеральные кольца", "Хрустящие минеральные кольца"]
+    const [isOpen, setIsOpen] = React.useState(false)
+    const toggleModal = () => (
+        setIsOpen(!isOpen)
+    )
 
     const FinalAmount = ({list}) => {
         const finalAmount = (list) => {
@@ -45,8 +50,8 @@ function BurgerConstructor (props) {
                     />
                 </div>
                 <section className={burgerConstructorStyles.constructor_mains}>
-                    {points.map(e => (
-                        <div>
+                    {points.map((e, index) => (
+                        <div key={index}>
                             <DragIcon type="primary"/>
                             <ConstructorElement
                                 text={e}
@@ -73,16 +78,19 @@ function BurgerConstructor (props) {
             <Points list={props.points} />
             <div className={burgerConstructorStyles.makeOrder__container}>
                 <FinalAmount list={props.points}/>
-                <Button type="primary" size="large">
+                <Button type="primary" size="large" onClick={toggleModal}>
                     Оформить заказ
                 </Button>
+                {isOpen &&
+                    <OrderDetails onClose={toggleModal}/>
+                }
             </div>
         </section>
     )
 }
 
 BurgerConstructor.propTypes = {
-    points: PropTypes.arrayOf(PropTypes.object)
+    points: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 export default BurgerConstructor

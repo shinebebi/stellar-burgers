@@ -39,11 +39,13 @@ function App () {
                 {isLoading && 'Загрузка...'}
                 {hasError && 'Произошла ошибка'}
                 {!isLoading && !hasError && data.length &&
-                <BurgerIngredients
-                    buns={data.filter(e => e.type === "bun")}
-                    mains={data.filter(e => e.type === "main")}
-                    sauces={data.filter(e => e.type === "sauce")}/>
-                    && <BurgerConstructor points={data}/>
+                     <>
+                         <BurgerIngredients
+                             buns={data.filter(e => e.type === "bun")}
+                             mains={data.filter(e => e.type === "main")}
+                             sauces={data.filter(e => e.type === "sauce")}/>
+                         <BurgerConstructor points={data}/>
+                     </>
                 }
             </div>
         </div>
