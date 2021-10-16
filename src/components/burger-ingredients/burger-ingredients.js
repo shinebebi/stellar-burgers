@@ -2,18 +2,29 @@ import React from 'react'
 import { Counter, CurrencyIcon, Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 import PropTypes from 'prop-types';
+import IngredientDetail from "../ingredient-details/ingredient-details";
 
 
 function BurgerIngredients (props) {
-    const Ingredient = ({ name, image, price }) => (
-        <div>
-            <img src={image} className={burgerIngredientsStyles.ingredient_photo}/>
-            <div className={burgerIngredientsStyles.price_info}>
-                <CurrencyIcon type="primary"/>
-                <p className="text text_type_digits-default">{price}</p>
+    const [state, setState] = React.useState({
+        isOpen:false,
+        data: {}
+    })
+    const toggleModal = (elemInfo) => (
+        setState({...state, isOpen: !state.isOpen, data: elemInfo})
+    )
+
+    const Ingredient = ({elemInfo}) => (
+        <>
+            <div onClick={() => toggleModal(elemInfo)}>
+                <img src={elemInfo.image} className={burgerIngredientsStyles.ingredient_photo}/>
+                <div className={burgerIngredientsStyles.price_info}>
+                    <CurrencyIcon type="primary"/>
+                    <p className="text text_type_digits-default">{elemInfo.price}</p>
+                </div>
+                <h4 className={`${burgerIngredientsStyles.ingredient_name} text text_type_main-default`}>{elemInfo.name}</h4>
             </div>
-            <h4 className={`${burgerIngredientsStyles.ingredient_name} text text_type_main-default`}>{name}</h4>
-        </div>
+        </>
     )
 
 
@@ -22,7 +33,7 @@ function BurgerIngredients (props) {
             <h3 className={`${burgerIngredientsStyles.ingredient_type} text text_type_main-medium`}>{type}</h3>
             <div className={burgerIngredientsStyles.ingredient_container}>
                 {list.map((elem)=>(
-                    <Ingredient name={elem.name} image={elem.image} price={elem.price} key={elem._id}/>
+                    <Ingredient elemInfo={elem} key={elem._id}/>
                 ))}
             </div>
         </section>
@@ -44,6 +55,7 @@ function BurgerIngredients (props) {
             </div>
         )
     }
+    const { data, isOpen } = state;
     return (
         <section className={burgerIngredientsStyles.windowIngredients}>
             <h2 className={`text text_type_main-large ${burgerIngredientsStyles.constructor__header}`}>Соберите бургер</h2>
@@ -53,14 +65,17 @@ function BurgerIngredients (props) {
                 <TypeOfIngredient list={props.sauces} type="Соусы"/>
                 <TypeOfIngredient list={props.mains} type="Начинки"/>
             </section>
+            {isOpen &&
+                <IngredientDetail onClose={toggleModal} data={data}/>
+            }
         </section>
     )
 }
 
 BurgerIngredients.propTypes = {
-    buns: PropTypes.arrayOf(PropTypes.object),
-    main: PropTypes.arrayOf(PropTypes.object),
-    sauces: PropTypes.arrayOf(PropTypes.object)
+    buns: PropTypes.arrayOf(PropTypes.object).isRequired,
+    mains: PropTypes.arrayOf(PropTypes.object).isRequired,
+    sauces: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 export default BurgerIngredients
