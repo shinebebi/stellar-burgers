@@ -48,7 +48,6 @@ function Modal (props) {
         document.getElementById('portal')
     )
 }
-
 Modal.propTypes = {
     header: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired

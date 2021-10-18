@@ -1,7 +1,6 @@
-import React from "react";
 import IngredientDetailsStyles from "./ingredient-details.module.css"
 import PropTypes from 'prop-types';
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import React from "react";
 
 function IngredientDetail(props) {
     return (
