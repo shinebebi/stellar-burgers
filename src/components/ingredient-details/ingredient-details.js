@@ -1,6 +1,9 @@
-import React from "react";
 import IngredientDetailsStyles from "./ingredient-details.module.css"
 import PropTypes from 'prop-types';
+<<<<<<< HEAD
+=======
+import React from "react";
+>>>>>>> 01e8d43b4aa7e755f771558369f8eac03d66715c
 
 function IngredientDetail(props) {
     return (
