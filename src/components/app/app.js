@@ -16,12 +16,7 @@ function App () {
         data: []
     })
 
-<<<<<<< HEAD
-    const getIngredients = () => {
-        setState({ ...state, hasError: false, isLoading: true });
-        fetch(urlIngredients)
-            .then(res => res.json())
-=======
+      
     const getResponseData = (res) => {
         if (!res.ok) {
             return Promise.reject(`Ошибка: ${res.status}`);
@@ -33,7 +28,6 @@ function App () {
         setState({ ...state, hasError: false, isLoading: true });
         fetch(urlIngredients)
             .then(res => getResponseData(res))
->>>>>>> main
             .then(data => setState({ ...state, data: data.data, isLoading: false }))
             .catch(e => {
                 setState({ ...state, hasError: true, isLoading: false });

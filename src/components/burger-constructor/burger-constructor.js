@@ -3,10 +3,7 @@ import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktiku
 import burgerConstructorStyles from './burger-constructor.module.css';
 import PropTypes from "prop-types";
 import OrderDetails from "../order-details/order-details";
-<<<<<<< HEAD
-=======
 import Modal from "../modal/modal";
->>>>>>> main
 
 
 function BurgerConstructor (props) {
@@ -86,13 +83,9 @@ function BurgerConstructor (props) {
                     Оформить заказ
                 </Button>
                 {isOpen &&
-<<<<<<< HEAD
-                    <OrderDetails onClose={toggleModal}/>
-=======
                     <Modal header='' onClose={toggleModal}>
                         <OrderDetails/>
                     </Modal>
->>>>>>> main
                 }
             </div>
         </section>

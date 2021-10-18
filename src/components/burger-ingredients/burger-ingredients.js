@@ -2,10 +2,7 @@ import React from 'react'
 import { Counter, CurrencyIcon, Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 import PropTypes from 'prop-types';
-<<<<<<< HEAD
-=======
 import Modal from "../modal/modal";
->>>>>>> main
 import IngredientDetail from "../ingredient-details/ingredient-details";
 
 
@@ -21,11 +18,7 @@ function BurgerIngredients (props) {
     const Ingredient = ({elemInfo}) => (
         <>
             <div onClick={() => toggleModal(elemInfo)}>
-<<<<<<< HEAD
-                <img src={elemInfo.image} className={burgerIngredientsStyles.ingredient_photo}/>
-=======
                 <img src={elemInfo.image} className={burgerIngredientsStyles.ingredient_photo} alt={elemInfo.name}/>
->>>>>>> main
                 <div className={burgerIngredientsStyles.price_info}>
                     <CurrencyIcon type="primary"/>
                     <p className="text text_type_digits-default">{elemInfo.price}</p>
@@ -74,13 +67,9 @@ function BurgerIngredients (props) {
                 <TypeOfIngredient list={props.mains} type="Начинки"/>
             </section>
             {isOpen &&
-<<<<<<< HEAD
-                <IngredientDetail onClose={toggleModal} data={data}/>
-=======
                 <Modal header="Детали ингредиента" onClose={toggleModal}>
                     <IngredientDetail data={data}/>
                 </Modal>
->>>>>>> main
             }
         </section>
     )

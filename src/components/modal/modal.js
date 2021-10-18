@@ -2,18 +2,8 @@ import React from "react";
 import modalStyles from './modal.module.css'
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import ReactDOM from "react-dom"
-<<<<<<< HEAD
-
-
-function ModalOverlay () {
-    return (
-        <div className={modalStyles.modal__overlay}/>
-    )
-}
-=======
 import ModalOverlay from "../modal-overlay/modal-overlay"
 import PropTypes from "prop-types";
->>>>>>> main
 
 
 function Modal (props) {
@@ -43,11 +33,7 @@ function Modal (props) {
 
 
     return ReactDOM.createPortal(
-<<<<<<< HEAD
-        <div>
-=======
         <>
->>>>>>> main
             <ModalOverlay/>
             <div className={modalStyles.popup} ref={popupRef}>
                 <div className={modalStyles.default__section}>
@@ -58,20 +44,12 @@ function Modal (props) {
                 </div>
                 {props.children}
             </div>
-<<<<<<< HEAD
-        </div>,
-=======
         </>,
->>>>>>> main
         document.getElementById('portal')
     )
 }
-
-<<<<<<< HEAD
-=======
 Modal.propTypes = {
     header: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired
 }
->>>>>>> main
 export default Modal
