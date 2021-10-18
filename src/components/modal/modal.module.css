@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .modal__overlay {
     z-index: 3;
     background-color: rgba(0, 0, 0, 0.6);
@@ -8,6 +9,8 @@
     cursor: pointer;
     position: fixed;
 }
+=======
+>>>>>>> main
 .popup {
     z-index: 10;
     display: flex;
