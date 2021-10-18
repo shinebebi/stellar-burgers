@@ -16,10 +16,17 @@ function App () {
         data: []
     })
 
+    const getResponseData = (res) => {
+        if (!res.ok) {
+            return Promise.reject(`Ошибка: ${res.status}`);
+        }
+        return res.json();
+    }
+
     const getIngredients = () => {
         setState({ ...state, hasError: false, isLoading: true });
         fetch(urlIngredients)
-            .then(res => res.json())
+            .then(res => getResponseData(res))
             .then(data => setState({ ...state, data: data.data, isLoading: false }))
             .catch(e => {
                 setState({ ...state, hasError: true, isLoading: false });
