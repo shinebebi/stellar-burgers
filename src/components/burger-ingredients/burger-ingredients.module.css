@@ -44,3 +44,12 @@
 .ingredient_photo {
     margin-left: 32px;
 }
+.ingredient_counter {
+    z-index: 10;
+    margin-top: 0;
+    margin-right: -20px;
+}
+.ingredient_section {
+    position: relative;
+    display: block;
+}
