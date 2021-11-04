@@ -136,7 +136,6 @@ function BurgerConstructor ({onDropHandler}) {
                                     const dragItem = points[dragIndex];
                                     points.splice(dragIndex, 1)
                                     points.splice(hoverIndex, 0, dragItem)
-                                    console.log(points)
                                     dispatch({type: SORT_ITEMS, points: points})
                                 }
                                 }/>
