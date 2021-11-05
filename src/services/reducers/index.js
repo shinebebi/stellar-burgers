@@ -17,8 +17,6 @@ import {
     GET_ORDER_DETAILS_FAILED
 } from "../actions/order-details";
 import {
-    GET_FINAL_AMOUNT,
-    GET_INITIAL_POINTS,
     DELETE_ITEM,
     ADD_ITEM,
     ADD_BUN, SORT_ITEMS
@@ -41,7 +39,7 @@ const initialStateConstructor = {
     hasError: false,
 
     points: [],
-    finalAmount: null
+    finalAmount: 0
 }
 
 export const ingredientsReducer = (state = initialStateIngredient, action) => {
@@ -105,18 +103,6 @@ export const constructorReducer = (state = initialStateConstructor, action) => {
                 hasError: false
             }
         }
-        case GET_FINAL_AMOUNT: {
-            return {
-                ...state,
-                finalAmount: action.prices.reduce((previousValue, currentValue) => previousValue + currentValue)
-            }
-        }
-        case GET_INITIAL_POINTS: {
-            return {
-                ...state,
-                points: action.points
-            }
-        }
         case GET_ORDER_DETAILS_REQUEST: {
             return {
                 ...state,
@@ -129,7 +115,9 @@ export const constructorReducer = (state = initialStateConstructor, action) => {
                 ...state,
                 orderNumber: action.orderNumber,
                 orderHeader: action.orderHeader,
-                isLoading: false
+                isLoading: false,
+                points: [],
+                finalAmount: 0
             };
         }
         case GET_ORDER_DETAILS_FAILED: {

@@ -15,20 +15,26 @@ function App () {
     const { points } = useSelector(state => state.constructorBurger)
     const dispatch = useDispatch();
     const handleDrop = (itemId) => {
+        const prevBunObj = points.filter(e => e.type === 'bun')[0]
         const dataFilter = () => {
             return data.filter(e => e._id === itemId._id)[0]
         }
-        if (itemId.type !== 'bun') {
+        if (itemId.type !== 'bun' || prevBunObj === undefined) {
             points.push(dataFilter())
-            dispatch({type: ADD_ITEM, points: points, price: dataFilter().price})
+            let price = null
+            if (itemId.type !== 'bun') {
+                price = dataFilter().price
+            } else {
+                price = dataFilter().price * 2
+            }
+            dispatch({type: ADD_ITEM, points: points, price: price})
         } else {
-            const prevBunObj = points.filter(e => e.type === 'bun')[0]
             const bunIndex = points.indexOf(prevBunObj)
             points[bunIndex] = dataFilter()
             dispatch({type: ADD_BUN,
                 points: points,
-                currentBun: dataFilter().price,
-                prevBun: prevBunObj.price
+                currentBun: dataFilter().price * 2,
+                prevBun: prevBunObj.price * 2
             })
         }
     };

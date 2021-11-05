@@ -21,6 +21,14 @@ function BurgerIngredients () {
             type: 'products',
             item: { _id, type }
         });
+        const fnc = (elemInfo) => {
+            let count = points.filter(x => x === elemInfo).length
+            if (elemInfo.type === 'bun') {
+                return count + 1
+            } else {
+                return count
+            }
+        }
         return (
             <div
                 onClick={() => dispatch({type: MODAL_INGREDIENT_OPEN, elemInfo: elemInfo})}
@@ -29,7 +37,7 @@ function BurgerIngredients () {
             >
                 <div className={burgerIngredientsStyles.ingredient_counter}>
                     {points.indexOf(elemInfo) !== -1 &&
-                    <Counter count={points.filter(x => x === elemInfo).length} size="default"/>
+                        <Counter count={fnc(elemInfo)} size="default"/>
                     }
                 </div>
                 <img src={elemInfo.image} className={burgerIngredientsStyles.ingredient_photo} alt={elemInfo.name}/>

@@ -1,16 +1,11 @@
 import { store } from '../../index'
+import { getResponseData, apiNorma } from "./index";
 
 export const MODAL_ORDER_OPEN = 'MODAL_ORDER_OPEN'
 export const MODAL_ORDER_CLOSE = 'MODAL_ORDER_CLOSE'
 export const GET_ORDER_DETAILS_REQUEST = 'GET_ORDER_DETAILS_REQUEST'
 export const GET_ORDER_DETAILS_SUCCESS = 'GET_ORDER_DETAILS_SUCCESS'
 export const GET_ORDER_DETAILS_FAILED ='GET_ORDER_DETAILS_FAILED'
-const getResponseData = (res) => {
-    if (!res.ok) {
-        return Promise.reject(`Ошибка: ${res.status}`);
-    }
-    return res.json();
-}
 export function getOrderDetails() {
     const points = store.getState().constructorBurger.points
     const postIngredients = []
@@ -21,7 +16,7 @@ export function getOrderDetails() {
         dispatch({
             type: GET_ORDER_DETAILS_REQUEST
         });
-        fetch('https://norma.nomoreparties.space/api/orders', {
+        fetch(`${apiNorma}orders`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
