@@ -36,10 +36,11 @@ export const Points = ({onDropHandler}) => {
                     : <section className={burgerConstructorStyles.constructor_mains}>
                         {points.map(function (e, index) {
                             return (e.type !== 'bun') &&
-                                <Item e={e} key={index} index={index} moveItem={(dragIndex, hoverIndex) => {
-                                    const dragItem = points[dragIndex];
+                                <Item e={e} key={e._id} index={index} moveItem={(dragIndex, hoverIndex) => {
+                                    /*const dragItem = points[dragIndex];
                                     points.splice(dragIndex, 1)
-                                    points.splice(hoverIndex, 0, dragItem)
+                                    points.splice(hoverIndex, 0, dragItem)*/
+                                    points.splice(hoverIndex, 0, points.splice(dragIndex, 1)[0]);
                                     dispatch({type: SORT_ITEMS, points: points})
                                 }
                                 }/>
