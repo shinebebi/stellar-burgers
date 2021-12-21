@@ -52,4 +52,9 @@
 .ingredient_section {
     position: relative;
     display: block;
+
+}
+.link {
+    text-decoration: none;
+    color: white;
 }
