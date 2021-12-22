@@ -72,10 +72,6 @@ export const patchUserInfo = (name, email, password) => {
                     setCookie("refreshToken", refreshData.refreshToken);
                     setCookie("token", refreshData.accessToken); // тут для примера accessToken храним в куке
                     getUserInfo()
-                    /*options.headers ??= {} // если в переданных опциях не было хедеров, добавляем в options пустой объект по ключу headers
-                    options.headers.authorization = refreshData.accessToken;
-                    const res = await fetch(url, options); // повторяем оригинальный запрос с оригинальными options (+ дополнительным хедером)
-                    return await getResponseData(res); // если все равно проваливаемся -- значит не судьба :/*/
                 } else {
                     dispatch({type: GET_USER_FAILED})
                 }
