@@ -2,18 +2,16 @@ import React from 'react'
 import { useDrag } from "react-dnd";
 import { Counter, CurrencyIcon, Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerIngredientsStyles from './burger-ingredients.module.css';
-import Modal from "../modal/modal";
-import IngredientDetail from "../ingredient-details/ingredient-details";
 import { useSelector, useDispatch } from 'react-redux';
-import { MODAL_INGREDIENT_OPEN, MODAL_INGREDIENT_CLOSE } from "../../services/actions/ingredient-details";
+import { MODAL_INGREDIENT_OPEN } from "../../services/actions/ingredient-details";
+import {Link} from "react-router-dom";
 
 
-function BurgerIngredients () {
+function BurgerIngredients ({children}) {
     const { data, modalIngredientOpen } = useSelector(state => state.ingredients)
     const { points } = useSelector(state => state.constructorBurger)
     const sectionRef = React.useRef()
     const dispatch = useDispatch()
-
 
     const Ingredient = ({elemInfo}) => {
         const { _id, type } = elemInfo
@@ -30,23 +28,25 @@ function BurgerIngredients () {
             }
         }
         return (
-            <div
-                onClick={() => dispatch({type: MODAL_INGREDIENT_OPEN, elemInfo: elemInfo})}
-                className={burgerIngredientsStyles.ingredient_section}
-                ref={dragRef}
-            >
-                <div className={burgerIngredientsStyles.ingredient_counter}>
-                    {points.indexOf(elemInfo) !== -1 &&
+            <Link to={{ pathname: `/ingredients/${_id}`}} className={burgerIngredientsStyles.link}>
+                <div
+                    onClick={() => dispatch({type: MODAL_INGREDIENT_OPEN, elemInfo: elemInfo})}
+                    className={burgerIngredientsStyles.ingredient_section}
+                    ref={dragRef}
+                >
+                    <div className={burgerIngredientsStyles.ingredient_counter}>
+                        {points.indexOf(elemInfo) !== -1 &&
                         <Counter count={fnc(elemInfo)} size="default"/>
-                    }
+                        }
+                    </div>
+                    <img src={elemInfo.image} className={burgerIngredientsStyles.ingredient_photo} alt={elemInfo.name}/>
+                    <div className={burgerIngredientsStyles.price_info}>
+                        <CurrencyIcon type="primary"/>
+                        <p className="text text_type_digits-default">{elemInfo.price}</p>
+                    </div>
+                    <h4 className={`${burgerIngredientsStyles.ingredient_name} text text_type_main-default`}>{elemInfo.name}</h4>
                 </div>
-                <img src={elemInfo.image} className={burgerIngredientsStyles.ingredient_photo} alt={elemInfo.name}/>
-                <div className={burgerIngredientsStyles.price_info}>
-                    <CurrencyIcon type="primary"/>
-                    <p className="text text_type_digits-default">{elemInfo.price}</p>
-                </div>
-                <h4 className={`${burgerIngredientsStyles.ingredient_name} text text_type_main-default`}>{elemInfo.name}</h4>
-            </div>
+            </Link>
         )
     }
 
@@ -75,9 +75,6 @@ function BurgerIngredients () {
                 }
             }
             sectionRef.current.addEventListener('scroll', updateScrollPosition)
-            return () => {
-                sectionRef.current.removeEventListener('scroll', updateScrollPosition)
-            }
         }, [])
         return (
             <div style={{ display: 'flex' }}>
@@ -102,11 +99,7 @@ function BurgerIngredients () {
                 <TypeOfIngredient list={data.filter(e => e.type === "sauce")} type="Соусы"/>
                 <TypeOfIngredient list={data.filter(e => e.type === "main")} type="Начинки"/>
             </section>
-            {modalIngredientOpen &&
-                <Modal header="Детали ингредиента" onClose={() => dispatch({type: MODAL_INGREDIENT_CLOSE})}>
-                    <IngredientDetail/>
-                </Modal>
-            }
+            {modalIngredientOpen && children}
         </section>
     )
 }

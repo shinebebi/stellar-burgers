@@ -3,14 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import appStyles from "./app.module.css"
-import { getIngredients } from '../../services/actions/burger-ingredients'
+import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
+import constructorStyles from "./constructor.module.css"
+import { getIngredients } from "../../services/actions/burger-ingredients";
 import { ADD_ITEM, ADD_BUN } from "../../services/actions/burger-constructor";
 
-function App () {
+export default function ConstructorPage ({children}) {
     const { data, isLoading, hasError } = useSelector(state => state.ingredients);
     const { points } = useSelector(state => state.constructorBurger)
     const dispatch = useDispatch();
@@ -42,19 +41,15 @@ function App () {
         dispatch(getIngredients())
     }, [dispatch])
     return (
-        <div>
-            <AppHeader/>
-            <div className={appStyles.main}>
-                {isLoading && 'Загрузка...'}
-                {hasError && 'Произошла ошибка'}
-                {!isLoading && !hasError && data.length &&
-                    <DndProvider backend={HTML5Backend}>
-                             <BurgerIngredients/>
-                             <BurgerConstructor onDropHandler={handleDrop}/>
-                    </DndProvider>
-                }
-            </div>
+        <div className={constructorStyles.main}>
+            {isLoading && 'Загрузка...'}
+            {hasError && 'Произошла ошибка'}
+            {!isLoading && !hasError && data.length &&
+            <DndProvider backend={HTML5Backend}>
+                <BurgerIngredients>{children}</BurgerIngredients>
+                <BurgerConstructor onDropHandler={handleDrop}/>
+            </DndProvider>
+            }
         </div>
     );
 }
-export default App

@@ -26,7 +26,6 @@ export const Points = ({onDropHandler}) => {
             }
         }
     }
-
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', height: 650}} ref={dropTarget}>
             {setBun('top', 'верх')}
@@ -36,11 +35,15 @@ export const Points = ({onDropHandler}) => {
                     : <section className={burgerConstructorStyles.constructor_mains}>
                         {points.map(function (e, index) {
                             return (e.type !== 'bun') &&
-                                <Item e={e} key={index} index={index} moveItem={(dragIndex, hoverIndex) => {
-                                    const dragItem = points[dragIndex];
+                                <Item e={e} key={e._id} index={index} moveItem={(dragIndex, hoverIndex) => {
+                                    /*const dragItem = points[dragIndex];
                                     points.splice(dragIndex, 1)
-                                    points.splice(hoverIndex, 0, dragItem)
-                                    dispatch({type: SORT_ITEMS, points: points})
+                                    points.splice(hoverIndex, 0, dragItem)*/
+                                    points.splice(hoverIndex, 0, points.splice(dragIndex, 1)[0]);
+                                    const uniqueArray = points.filter(function(item, pos) {
+                                        return points.indexOf(item) === pos;
+                                    })
+                                    dispatch({type: SORT_ITEMS, points: uniqueArray})
                                 }
                                 }/>
                         })}

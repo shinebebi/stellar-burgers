@@ -13,11 +13,13 @@ import {
 } from "../../services/actions/order-details";
 import {Points} from "./points";
 import PropTypes from "prop-types";
+import {useNavigate} from "react-router-dom";
 
 function BurgerConstructor ({onDropHandler}) {
     const dispatch = useDispatch()
     const { modalOrderOpen } = useSelector(state => state.constructorBurger)
-
+    const { name } = useSelector(state => state.auth)
+    const navigate = useNavigate()
     return (
         <section className={burgerConstructorStyles.windowConstructor}>
             <Points onDropHandler={onDropHandler}/>
@@ -26,10 +28,11 @@ function BurgerConstructor ({onDropHandler}) {
                 <Button type="primary" size="large" onClick={() => dispatch({type: MODAL_ORDER_OPEN})}>
                     Оформить заказ
                 </Button>
-                {modalOrderOpen &&
+                {modalOrderOpen && name ?
                     <Modal header='' onClose={() => dispatch({type: MODAL_ORDER_CLOSE})}>
                         <OrderDetails/>
                     </Modal>
+                    : navigate('/login')
                 }
             </div>
         </section>

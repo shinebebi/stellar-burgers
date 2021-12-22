@@ -8,36 +8,51 @@ import PropTypes from "prop-types";
 export const Item = ({e, index, moveItem}) => {
     const dispatch = useDispatch()
     const { points } = useSelector(state => state.constructorBurger)
-    const ind = index
     const itemRef = React.useRef();
-    const [{ isHover }, drop] = useDrop({
+    const { _id } = e
+    const [{ handlerId }, drop] = useDrop({
         accept: 'items',
-        collect: monitor => ({
-            isHover: monitor.isOver()
-        }),
-        drop(item) {
+        collect(monitor) {
+            return {
+                handlerId: monitor.getHandlerId(),
+            };
+        },
+        hover(item, monitor) {
             if (!itemRef.current) {
                 return;
             }
-            const dragIndex = item.ind;
+            const dragIndex = item.index;
             const hoverIndex = index;
             if (dragIndex === hoverIndex) {
                 return;
             }
-            moveItem(dragIndex, hoverIndex)
-            item.ind = hoverIndex;
-        }
+            const hoverBoundingRect = itemRef.current?.getBoundingClientRect();
+            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+            const clientOffset = monitor.getClientOffset();
+            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                return;
+            }
+            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                return;
+            }
+            moveItem(dragIndex, hoverIndex);
+            item.index = hoverIndex;
+        },
     });
-    const [, drag] = useDrag({
+    const [{ isDragging }, drag] = useDrag({
         type: 'items',
         item: () => {
-            return { ind };
-        }
+            return { _id, index };
+        },
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+        }),
     });
+    const opacity = isDragging ? 0 : 1;
     drag(drop(itemRef));
-    const marginTop = isHover ? '20px' : '0px'
     return (
-        <div ref={itemRef} style={{ marginTop }}>
+        <div ref={itemRef} style={{ opacity, cursor: 'move' }} data-handler-id={handlerId}>
             <DragIcon type="primary"/>
             <ConstructorElement
                 text={e.name}
