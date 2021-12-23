@@ -75,6 +75,9 @@ function BurgerIngredients ({children}) {
                 }
             }
             sectionRef.current.addEventListener('scroll', updateScrollPosition)
+            return (
+                sectionRef.current.removeEventListener('scroll', updateScrollPosition)
+            )
         }, [])
         return (
             <div style={{ display: 'flex' }}>

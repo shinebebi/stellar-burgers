@@ -15,7 +15,7 @@ export default function App() {
             <AppHeader/>
             <Routes>
                 <Route path="/" exact={true} element={<ConstructorPage/>}/>
-                <Route path="/login" exact={true} element={<LoginPage/>}/>
+                <Route path="/login" exact={false} element={<LoginPage/>}/>
                 <Route path="/register" exact={true} element={<RegisterPage/>}/>
                 <Route path="/forgot-password" exact={true} element={<ForgotPasswordPage/>}/>
                 <Route path="/reset-password" exact={true} element={<ResetPasswordPage/>}/>

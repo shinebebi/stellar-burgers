@@ -25,14 +25,19 @@ function BurgerConstructor ({onDropHandler}) {
             <Points onDropHandler={onDropHandler}/>
             <div className={burgerConstructorStyles.makeOrder__container}>
                 <FinalAmount/>
-                <Button type="primary" size="large" onClick={() => dispatch({type: MODAL_ORDER_OPEN})}>
+                <Button type="primary" size="large" onClick={() => {
+                    if (name) {
+                        dispatch({type: MODAL_ORDER_OPEN})
+                    } else {
+                        navigate('/login')
+                    }
+                }}>
                     Оформить заказ
                 </Button>
-                {modalOrderOpen && name ?
+                {modalOrderOpen &&
                     <Modal header='' onClose={() => dispatch({type: MODAL_ORDER_CLOSE})}>
                         <OrderDetails/>
                     </Modal>
-                    : navigate('/login')
                 }
             </div>
         </section>

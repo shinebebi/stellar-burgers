@@ -13,7 +13,8 @@ export default function LoginPage () {
     const navigate = useNavigate();
     React.useEffect(() => {
         dispatch(getUserInfo())
-    }, [])
+    }, [dispatch])
+
     if (!hasError && name) {
         return (
             <Navigate to="/"/>
