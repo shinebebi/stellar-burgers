@@ -25,8 +25,8 @@ export function signIn (form, url) {
             .then(res => getResponseData(res))
             .then(data => {
                 if (data.success) {
-                    let authToken = data.accessToken.split('Bearer ')[1]
-                    let refreshToken = data.refreshToken
+                    const authToken = data.accessToken.split('Bearer ')[1]
+                    const refreshToken = data.refreshToken
                     console.log(authToken)
                     if (authToken && refreshToken) {
                         setCookie('token', authToken);

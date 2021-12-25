@@ -1,4 +1,4 @@
-import {POST_LOGIN_REQUEST, POST_LOGIN_SUCCESS, POST_LOGIN_FAILED} from "../actions";
+import {POST_LOGIN_REQUEST, POST_LOGIN_SUCCESS, POST_LOGIN_FAILED, RESET_PASSWORD} from "../actions";
 import {POST_LOGOUT_REQUEST, POST_LOGOUT_SUCCESS, POST_LOGOUT_FAILED} from "../actions/logout";
 import {GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILED} from "../actions/profile";
 
@@ -8,7 +8,9 @@ const initialStateAuth = {
     email: '',
     password: '',
     isLoading: false,
-    hasError: false
+    hasError: false,
+    userAuth: false,
+    resetPw: false
 }
 
 export const authReducer = (state = initialStateAuth, action) => {
@@ -67,12 +69,17 @@ export const authReducer = (state = initialStateAuth, action) => {
             return {
                 ...state,
                 name: action.name,
-                email: action.email
+                email: action.email,
+                userAuth: true
             }
         } case GET_USER_FAILED: {
             return {
                 isLoading: false,
                 hasError: true
+            }
+        } case RESET_PASSWORD: {
+            return {
+                resetPw: true
             }
         }
         default: {

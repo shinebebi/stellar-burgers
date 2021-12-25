@@ -21,25 +21,25 @@ export default function LoginPage () {
         )
     }
     return (
-        <form className={styles.container}>
+        <div className={styles.container}>
             <h1 className={`text text_type_main-medium`}>Вход</h1>
-            <div className={styles.inputContainer}>
-                <EmailInput onChange={e => setValueEmail(e.target.value)} value={valueEmail} name={'email'} />
-                <PasswordInput
-                    onChange={e => setValuePw(e.target.value)}
-                    value={valuePw}
-                    name={'password'}
-                />
-            </div>
-            <Button type="primary" size="medium" onClick={(e) => {
+            <form className={styles.inputContainer} onSubmit={(e) => {
                 e.preventDefault()
                 dispatch(signIn({
                     email: valueEmail,
                     password: valuePw
                 }, 'auth/login'))
             }}>
-                Войти
-            </Button>
+                <EmailInput onChange={e => setValueEmail(e.target.value)} value={valueEmail} name={'email'} />
+                <PasswordInput
+                    onChange={e => setValuePw(e.target.value)}
+                    value={valuePw}
+                    name={'password'}
+                />
+                <Button type="primary" size="medium">
+                    Войти
+                </Button>
+            </form>
             <div className={styles.support}>
                 <p className="text text_type_main-default text_color_inactive">
                     Вы — новый пользователь?
@@ -58,6 +58,6 @@ export default function LoginPage () {
                     </span>
                 </p>
             </div>
-        </form>
+        </div>
     )
 }

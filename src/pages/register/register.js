@@ -26,9 +26,16 @@ export default function RegisterPage () {
         )
     }
     return (
-        <form className={loginStyles.container}>
+        <div className={loginStyles.container}>
             <h1 className={`text text_type_main-medium`}>Регистрация</h1>
-            <div className={loginStyles.inputContainer}>
+            <form className={loginStyles.inputContainer} onSubmit={(e) => {
+                e.preventDefault()
+                dispatch(signIn({
+                    email: valueEmail,
+                    password: valuePw,
+                    name: valueName
+                }, 'auth/register'))
+            }}>
                 <Input
                     type={'text'}
                     placeholder={'Имя'}
@@ -46,17 +53,10 @@ export default function RegisterPage () {
                     value={valuePw}
                     name={'password'}
                 />
-            </div>
-            <Button type="primary" size="medium" onClick={(e) => {
-                e.preventDefault()
-                dispatch(signIn({
-                    email: valueEmail,
-                    password: valuePw,
-                    name: valueName
-                }, 'auth/register'))
-            }}>
-                Зарегистрироваться
-            </Button>
+                <Button type="primary" size="medium">
+                    Зарегистрироваться
+                </Button>
+            </form>
             <p className="text text_type_main-default text_color_inactive" style={{marginTop: 80}}>
                 Уже зарегистрированы?
                 <span>
@@ -65,6 +65,6 @@ export default function RegisterPage () {
                     </Button>
                 </span>
             </p>
-        </form>
+        </div>
     )
 }

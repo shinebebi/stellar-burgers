@@ -11,9 +11,6 @@ function IngredientDetail() {
     const { data } = useSelector(state => state.ingredients)
     const { ingredientDetails } = useSelector(state => state.ingredients)
     useEffect(() => {
-        if (data.length === 0) {
-            dispatch(getIngredients())
-        }
         dispatch({type: LINK_INGREDIENT_OPEN, elemInfo: data.filter(e => e._id === id)[0]})
     }, [data])
     return (

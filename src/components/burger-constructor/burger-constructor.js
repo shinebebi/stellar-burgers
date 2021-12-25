@@ -20,6 +20,7 @@ function BurgerConstructor ({onDropHandler}) {
     const { modalOrderOpen } = useSelector(state => state.constructorBurger)
     const { name } = useSelector(state => state.auth)
     const navigate = useNavigate()
+    // @ts-ignore
     return (
         <section className={burgerConstructorStyles.windowConstructor}>
             <Points onDropHandler={onDropHandler}/>
@@ -35,7 +36,10 @@ function BurgerConstructor ({onDropHandler}) {
                     Оформить заказ
                 </Button>
                 {modalOrderOpen &&
-                    <Modal header='' onClose={() => dispatch({type: MODAL_ORDER_CLOSE})}>
+                    <Modal header='' onClose={() => {
+                        dispatch({type: MODAL_ORDER_CLOSE})
+                        navigate('/')
+                    }}>
                         <OrderDetails/>
                     </Modal>
                 }

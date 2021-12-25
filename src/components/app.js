@@ -1,17 +1,22 @@
 import {BrowserRouter as Router, Routes, Route, useNavigate} from 'react-router-dom';
-import AppHeader from "./components/app-header/app-header";
-import { ConstructorPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage } from "./pages/index"
-import {ProtectedAuthorized} from "./components/protectedRoutes/protectedAuthorized";
-import IngredientDetail from "./components/ingredient-details/ingredient-details";
-import React from "react";
-import Modal from "./components/modal/modal";
-import {MODAL_INGREDIENT_CLOSE} from "./services/actions/ingredient-details";
+import AppHeader from "./app-header/app-header";
+import { ConstructorPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage } from "../pages"
+import {ProtectedAuthorized} from "./protectedRoutes/protectedAuthorized";
+import IngredientDetail from "./ingredient-details/ingredient-details";
+import React, {useEffect} from "react";
+import Modal from "./modal/modal";
+import {MODAL_INGREDIENT_CLOSE} from "../services/actions/ingredient-details";
 import {useDispatch, useSelector} from "react-redux";
+import {getIngredients} from "../services/actions/burger-ingredients";
 export default function App() {
     const { data, modalIngredientOpen } = useSelector(state => state.ingredients)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    useEffect(() => {
+        dispatch(getIngredients())
+    }, [])
     return (
-        <Router>
+        <>
             <AppHeader/>
             <Routes>
                 <Route path="/" exact={true} element={<ConstructorPage/>}/>
@@ -32,6 +37,7 @@ export default function App() {
                         <ConstructorPage>
                             <Modal header="Детали Ингредиента" onClose={() => {
                                 dispatch({type: MODAL_INGREDIENT_CLOSE})
+                                navigate('/')
                             }}>
                                 <IngredientDetail/>
                             </Modal>
@@ -39,6 +45,6 @@ export default function App() {
                     }
                 />
             </Routes>
-        </Router>
+        </>
     );
 }

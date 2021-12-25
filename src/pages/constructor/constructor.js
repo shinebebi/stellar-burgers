@@ -6,7 +6,6 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import constructorStyles from "./constructor.module.css"
-import { getIngredients } from "../../services/actions/burger-ingredients";
 import { ADD_ITEM, ADD_BUN } from "../../services/actions/burger-constructor";
 
 export default function ConstructorPage ({children}) {
@@ -37,9 +36,6 @@ export default function ConstructorPage ({children}) {
             })
         }
     };
-    React.useEffect (() => {
-        dispatch(getIngredients())
-    }, [dispatch])
     return (
         <div className={constructorStyles.main}>
             {isLoading && 'Загрузка...'}

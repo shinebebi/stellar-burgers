@@ -4,14 +4,12 @@ import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import ReactDOM from "react-dom"
 import ModalOverlay from "../modal-overlay/modal-overlay"
 import PropTypes from "prop-types";
-import {useNavigate} from "react-router-dom";
 
 
 function Modal (props) {
     const popupRef = React.useRef()
-    const navigate = useNavigate()
     const escFunction = React.useCallback((event) => {
-        if(event.keyCode === 27) {
+        if(event.keyCode === 'Escape') {
             props.onClose()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -19,13 +17,8 @@ function Modal (props) {
 
     const outsideHandler = (event) => {
         if (!popupRef.current.contains(event.target)) {
-            closeFnc()
+            props.onClose()
         }
-    }
-
-    const closeFnc = () => {
-        props.onClose()
-        navigate('/')
     }
 
     React.useEffect(() => {
@@ -45,7 +38,7 @@ function Modal (props) {
             <div className={modalStyles.popup} ref={popupRef}>
                 <div className={modalStyles.default__section}>
                     <h2 className={`text text_type_main-medium ${modalStyles.header}`}>{props.header}</h2>
-                    <button onClick={closeFnc} className={modalStyles.close_button}>
+                    <button onClick={props.onClose} className={modalStyles.close_button}>
                         <CloseIcon type='primary'/>
                     </button>
                 </div>

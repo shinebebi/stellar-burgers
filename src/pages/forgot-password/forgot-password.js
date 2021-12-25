@@ -6,6 +6,7 @@ import { emailRequest } from "../../services/api";
 import {getUserInfo} from "../../services/actions/profile";
 import {useDispatch, useSelector} from "react-redux";
 export default function ForgotPasswordPage () {
+    const {resetPw} = useSelector(state => state.auth)
     const [valueEmail, setValueEmail] = React.useState('')
     const [eSuccess, setESuccess] = React.useState(false)
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ export default function ForgotPasswordPage () {
         return (
             <Navigate to="/reset-password"/>
         )
-    } else if (!hasError && name) {
+    } else if (!resetPw) {
         return (
             <Navigate to="/"/>
         )
@@ -36,15 +37,15 @@ export default function ForgotPasswordPage () {
     return (
         <div className={styles.container}>
             <h1 className={`text text_type_main-medium`}>Восстановление пароля</h1>
-            <div className={styles.inputContainer}>
-                <EmailInput onChange={e => setValueEmail(e.target.value)} value={valueEmail} name={'email'} />
-            </div>
-            <Button type="primary" size="medium" onClick={(e) => {
+            <form className={styles.inputContainer} onSubmit={(e) => {
                 e.preventDefault()
                 restorePW()
             }}>
-                Восстановить
-            </Button>
+                <EmailInput onChange={e => setValueEmail(e.target.value)} value={valueEmail} name={'email'} />
+                <Button type="primary" size="medium">
+                    Восстановить
+                </Button>
+            </form>
                 <p className="text text_type_main-default text_color_inactive" style={{marginTop: 80}}>
                     Вспомнили пароль?
                     <span style={{marginLeft: -15}}>
