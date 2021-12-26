@@ -8,11 +8,11 @@ export default function LoginPage () {
     const dispatch = useDispatch()
     const [valueEmail, setValueEmail] = React.useState('')
     const [valuePw, setValuePw] = React.useState('')
-    const { loginSuccess } = useSelector(state => state.auth)
+    const { loginSuccess, name } = useSelector(state => state.auth)
     const navigate = useNavigate();
     const location = useLocation()
-    //console.log(location.state)
-    if (loginSuccess) {
+    console.log(location.state)
+    if (loginSuccess && name) {
         return (
             <Navigate to={location.state !== null ? location.state.path : '/'}/>
         )

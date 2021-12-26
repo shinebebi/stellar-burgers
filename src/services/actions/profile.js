@@ -33,7 +33,7 @@ export const getUserInfo = () => {
                     const refreshData = refreshToken()
                     setCookie("refreshToken", refreshData.refreshToken);
                     setCookie("token", refreshData.accessToken);
-                    getUserInfo()
+                    //getUserInfo()
                 }
             })
     }
@@ -71,7 +71,7 @@ export const patchUserInfo = (name, email, password) => {
                     console.log(refreshData)// обновляем токен; пытаемся 1 раз, если не сложилось -- падаем с ошибкой
                     setCookie("refreshToken", refreshData.refreshToken);
                     setCookie("token", refreshData.accessToken); // тут для примера accessToken храним в куке
-                    getUserInfo()
+                    //getUserInfo()
                 } else {
                     dispatch({type: GET_USER_FAILED})
                 }
