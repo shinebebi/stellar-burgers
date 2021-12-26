@@ -35,9 +35,6 @@ export default function ProfilePage() {
             dispatch(postLogout())
         }
     }
-    React.useEffect(() => {
-        dispatch(getUserInfo())
-    }, [dispatch])
     if (!hasError && !isLoading && !name) {
         return (
             <Navigate to="/login"/>

@@ -4,7 +4,6 @@ import React from "react";
 import {Navigate, useNavigate} from 'react-router-dom';
 import {signIn} from "../../services/actions/login";
 import {useDispatch, useSelector} from "react-redux";
-import {getUserInfo} from "../../services/actions/profile";
 
 export default function RegisterPage () {
     const navigate = useNavigate();
@@ -14,9 +13,6 @@ export default function RegisterPage () {
     const [valueName, setValueName] = React.useState('')
     const inputNameRef = React.useRef(null)
     const [valuePw, setValuePw] = React.useState('')
-    React.useEffect(() => {
-        dispatch(getUserInfo())
-    }, [])
     const onChange = e => {
         setValuePw(e.target.value)
     }

@@ -8,12 +8,14 @@ import Modal from "./modal/modal";
 import {MODAL_INGREDIENT_CLOSE} from "../services/actions/ingredient-details";
 import {useDispatch, useSelector} from "react-redux";
 import {getIngredients} from "../services/actions/burger-ingredients";
+import {getUserInfo} from "../services/actions/profile";
 export default function App() {
     const { data, modalIngredientOpen } = useSelector(state => state.ingredients)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     useEffect(() => {
         dispatch(getIngredients())
+        dispatch(getUserInfo())
     }, [])
     return (
         <>

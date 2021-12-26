@@ -10,7 +10,8 @@ const initialStateAuth = {
     isLoading: false,
     hasError: false,
     userAuth: false,
-    resetPw: false
+    resetPw: false,
+    loginSuccess: false
 }
 
 export const authReducer = (state = initialStateAuth, action) => {
@@ -28,6 +29,7 @@ export const authReducer = (state = initialStateAuth, action) => {
                 isLoading: false,
                 name: action.name,
                 email: action.email,
+                loginSuccess: true
             }
         }
         case POST_LOGIN_FAILED: {

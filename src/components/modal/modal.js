@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 function Modal (props) {
     const popupRef = React.useRef()
     const escFunction = React.useCallback((event) => {
-        if(event.keyCode === 'Escape') {
+        if(event.key === "Escape") {
             props.onClose()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

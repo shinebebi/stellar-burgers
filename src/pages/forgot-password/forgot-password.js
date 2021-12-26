@@ -3,18 +3,13 @@ import styles from "../login.module.css"
 import {Button, EmailInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate, Navigate } from 'react-router-dom';
 import { emailRequest } from "../../services/api";
-import {getUserInfo} from "../../services/actions/profile";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 export default function ForgotPasswordPage () {
     const {resetPw} = useSelector(state => state.auth)
     const [valueEmail, setValueEmail] = React.useState('')
     const [eSuccess, setESuccess] = React.useState(false)
     const navigate = useNavigate();
-    const dispatch = useDispatch()
-    const { hasError, name } = useSelector(state => state.auth)
-    React.useEffect(() => {
-        dispatch(getUserInfo())
-    }, [])
+    const { name } = useSelector(state => state.auth)
     const restorePW = () => {
         emailRequest(valueEmail)
             .then(data => {
@@ -29,7 +24,7 @@ export default function ForgotPasswordPage () {
         return (
             <Navigate to="/reset-password"/>
         )
-    } else if (!resetPw) {
+    } else if (resetPw) {
         return (
             <Navigate to="/"/>
         )

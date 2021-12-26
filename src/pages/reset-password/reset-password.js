@@ -15,7 +15,7 @@ export default function ResetPasswordPage () {
     const [request, setRequest] = React.useState(false)
     const navigate = useNavigate();
     const location = useLocation()
-    console.log(location)
+    //console.log(location)
     React.useEffect(() => {
         dispatch(getUserInfo())
     }, [])
@@ -36,7 +36,7 @@ export default function ResetPasswordPage () {
         return (
             <Navigate to="/login"/>
         )
-    } else if (!hasError && name) {
+    } else if (name) {
         return (
             <Navigate to="/"/>
         )

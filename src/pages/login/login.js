@@ -1,23 +1,20 @@
 import React from 'react';
 import styles from "../login.module.css"
 import { Button, PasswordInput, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import {Navigate, useNavigate} from 'react-router-dom';
+import {Navigate, useLocation, useNavigate} from 'react-router-dom';
 import {signIn} from "../../services/actions/login";
 import {useDispatch, useSelector} from "react-redux";
-import {getUserInfo} from "../../services/actions/profile";
 export default function LoginPage () {
     const dispatch = useDispatch()
     const [valueEmail, setValueEmail] = React.useState('')
     const [valuePw, setValuePw] = React.useState('')
-    const { hasError, name } = useSelector(state => state.auth)
+    const { loginSuccess } = useSelector(state => state.auth)
     const navigate = useNavigate();
-    React.useEffect(() => {
-        dispatch(getUserInfo())
-    }, [dispatch])
-
-    if (!hasError && name) {
+    const location = useLocation()
+    //console.log(location.state)
+    if (loginSuccess) {
         return (
-            <Navigate to="/"/>
+            <Navigate to={location.state !== null ? location.state.path : '/'}/>
         )
     }
     return (
@@ -29,6 +26,7 @@ export default function LoginPage () {
                     email: valueEmail,
                     password: valuePw
                 }, 'auth/login'))
+                //navigate(location.state !== null ? location.state.path : '/')
             }}>
                 <EmailInput onChange={e => setValueEmail(e.target.value)} value={valueEmail} name={'email'} />
                 <PasswordInput

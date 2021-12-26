@@ -1,15 +1,10 @@
 import {Navigate, useLocation} from 'react-router-dom';
 import React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {getUserInfo} from "../../services/actions/profile";
+import {useSelector} from "react-redux";
 
 export function ProtectedAuthorized({ children }) {
     const {userAuth} = useSelector(state => state.auth)
     const location = useLocation();
-    const dispatch = useDispatch()
-    React.useEffect(() => {
-        dispatch(getUserInfo())
-    }, []);
     return userAuth
         ? children
         : <Navigate
