@@ -11,7 +11,7 @@ export default function LoginPage () {
     const { loginSuccess, name } = useSelector(state => state.auth)
     const navigate = useNavigate();
     const location = useLocation()
-    console.log(location.state)
+    //console.log(location.state)
     if (loginSuccess && name) {
         return (
             <Navigate to={location.state !== null ? location.state.path : '/'}/>
