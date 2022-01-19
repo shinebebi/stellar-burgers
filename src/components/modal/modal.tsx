@@ -1,23 +1,26 @@
-import React from "react";
+import React, {FC, ReactNode} from "react";
 import modalStyles from './modal.module.css'
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import ReactDOM from "react-dom"
 import ModalOverlay from "../modal-overlay/modal-overlay"
-import PropTypes from "prop-types";
 
+type IModal = ReactNode & {
+    header: string
+    onClose: () => void;
+};
 
-function Modal (props) {
-    const popupRef = React.useRef()
+const Modal: FC<IModal> = ({header, onClose, children}) => {
+    const popupRef = React.useRef<any>(null);
     const escFunction = React.useCallback((event) => {
         if(event.key === "Escape") {
-            props.onClose()
+            onClose()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const outsideHandler = (event) => {
+    const outsideHandler = (event: any) => {
         if (!popupRef.current.contains(event.target)) {
-            props.onClose()
+            onClose()
         }
     }
 
@@ -37,19 +40,15 @@ function Modal (props) {
             <ModalOverlay/>
             <div className={modalStyles.popup} ref={popupRef}>
                 <div className={modalStyles.default__section}>
-                    <h2 className={`text text_type_main-medium ${modalStyles.header}`}>{props.header}</h2>
-                    <button onClick={props.onClose} className={modalStyles.close_button}>
+                    <h2 className={`text text_type_main-medium ${modalStyles.header}`}>{header}</h2>
+                    <button onClick={onClose} className={modalStyles.close_button}>
                         <CloseIcon type='primary'/>
                     </button>
                 </div>
-                {props.children}
+                {children}
             </div>
         </>,
-        document.getElementById('portal')
+        document.getElementById('portal')!
     )
-}
-Modal.propTypes = {
-    header: PropTypes.string.isRequired,
-    onClose: PropTypes.func.isRequired
 }
 export default Modal

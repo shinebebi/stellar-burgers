@@ -1,9 +1,10 @@
 import {Navigate, useLocation} from 'react-router-dom';
-import React from "react";
+import React, {FC, ReactNode} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserInfo} from "../../services/actions/profile";
 
-export function ProtectedAuthorized({ children }) {
+export const ProtectedAuthorized: FC<any> =({ children }) => {
+    // @ts-ignore
     const {name, userAuth} = useSelector(state => state.auth)
     const location = useLocation();
     const dispatch = useDispatch()

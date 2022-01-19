@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {FunctionComponent} from 'react'
 import {
     Button
 } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -12,15 +12,18 @@ import {
     MODAL_ORDER_CLOSE
 } from "../../services/actions/order-details";
 import {Points} from "./points";
-import PropTypes from "prop-types";
 import {useNavigate} from "react-router-dom";
+import {IItemIdd} from "../../pages/constructor/constructor";
 
-function BurgerConstructor ({onDropHandler}) {
+export interface IBurgerConstructor {
+    onDropHandler: (itemId: IItemIdd) => void;
+}
+
+export const BurgerConstructor: FunctionComponent<IBurgerConstructor> = ({onDropHandler}) => {
     const dispatch = useDispatch()
-    const { modalOrderOpen } = useSelector(state => state.constructorBurger)
-    const { name } = useSelector(state => state.auth)
+    const { modalOrderOpen } = useSelector((state: any) => state.constructorBurger)
+    const { name } = useSelector((state: any) => state.auth)
     const navigate = useNavigate()
-    // @ts-ignore
     return (
         <section className={burgerConstructorStyles.windowConstructor}>
             <Points onDropHandler={onDropHandler}/>
@@ -46,10 +49,6 @@ function BurgerConstructor ({onDropHandler}) {
             </div>
         </section>
     )
-}
-
-BurgerConstructor.propTypes = {
-    onDropHandler: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor

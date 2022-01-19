@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from "../login.module.css"
 import {Button, Input, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import {Navigate, useLocation, useNavigate} from 'react-router-dom';
@@ -6,27 +6,24 @@ import { passwordReset } from "../../services/api";
 import {getUserInfo} from "../../services/actions/profile";
 import {useDispatch, useSelector} from "react-redux";
 import {RESET_PASSWORD} from "../../services/actions";
-export default function ResetPasswordPage () {
-    const [valueECode, setValueECode] = React.useState('')
-    const inputEmailRef = React.useRef(null)
+export const ResetPasswordPage: FC = () => {
+    const [valueECode, setValueECode] = React.useState<string>('')
+    const inputEmailRef = React.useRef<HTMLInputElement>(null)
     const dispatch = useDispatch()
-    const [valuePw, setValuePw] = React.useState('')
-    const { hasError, name } = useSelector(state => state.auth)
-    const [request, setRequest] = React.useState(false)
+    const [valuePw, setValuePw] = React.useState<string>('')
+    const { name } = useSelector((state: any) => state.auth)
+    const [request, setRequest] = React.useState<boolean>(false)
     const navigate = useNavigate();
-    const location = useLocation()
-    //console.log(location)
     React.useEffect(() => {
         dispatch(getUserInfo())
     }, [])
-    const onChange = e => {
+    const onChange = (e: { target: HTMLInputElement; }) => {
         setValuePw(e.target.value)
     }
     const restorePW = () => {
         passwordReset(valuePw, valueECode)
             .then(data => {
                 if (data.success) {
-                    //console.log(data)
                     setRequest(true)
                 }
             })

@@ -1,15 +1,14 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from "../login.module.css"
 import {Button, EmailInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate, Navigate } from 'react-router-dom';
 import { emailRequest } from "../../services/api";
 import {useSelector} from "react-redux";
-export default function ForgotPasswordPage () {
-    const {resetPw} = useSelector(state => state.auth)
-    const [valueEmail, setValueEmail] = React.useState('')
-    const [eSuccess, setESuccess] = React.useState(false)
+export const ForgotPasswordPage: FC = () => {
+    const {resetPw, name} = useSelector((state: any) => state.auth)
+    const [valueEmail, setValueEmail] = React.useState<string>('')
+    const [eSuccess, setESuccess] = React.useState<boolean>(false)
     const navigate = useNavigate();
-    const { name } = useSelector(state => state.auth)
     const restorePW = () => {
         emailRequest(valueEmail)
             .then(data => {

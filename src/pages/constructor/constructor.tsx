@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC, ReactNode} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -7,15 +7,22 @@ import BurgerIngredients from "../../components/burger-ingredients/burger-ingred
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import constructorStyles from "./constructor.module.css"
 import { ADD_ITEM, ADD_BUN } from "../../services/actions/burger-constructor";
-
-export default function ConstructorPage ({children}) {
-    const { data, isLoading, hasError } = useSelector(state => state.ingredients);
-    const { points } = useSelector(state => state.constructorBurger)
+interface IBunObj {
+    type: string
+    _id: string
+}
+export interface IItemIdd {
+    type: string
+    _id: string
+}
+export const ConstructorPage: FC<ReactNode> = ({children}) => {
+    const { data, isLoading, hasError } = useSelector((state: any) => state.ingredients);
+    const { points } = useSelector((state: any) => state.constructorBurger)
     const dispatch = useDispatch();
-    const handleDrop = (itemId) => {
-        const prevBunObj = points.filter(e => e.type === 'bun')[0]
+    const handleDrop = (itemId: IItemIdd) => {
+        const prevBunObj = points.filter((e: IBunObj) => e.type === 'bun')[0]
         const dataFilter = () => {
-            return data.filter(e => e._id === itemId._id)[0]
+            return data.filter((e: IBunObj) => e._id === itemId._id)[0]
         }
         if (itemId.type !== 'bun' || prevBunObj === undefined) {
             points.push(dataFilter())

@@ -1,15 +1,30 @@
-import React from "react";
-import {useDrag, useDrop} from "react-dnd";
+import React, {FunctionComponent} from "react";
+import {useDrag, useDrop, DropTargetMonitor} from "react-dnd";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {DELETE_ITEM} from "../../services/actions/burger-constructor";
 import {useDispatch, useSelector} from "react-redux";
-import PropTypes from "prop-types";
+import { XYCoord } from 'dnd-core'
 
-export const Item = ({e, index, moveItem}) => {
+interface IFunctionComponent {
+    elem: {
+        _id: string;
+        name: string;
+        price: number;
+        image: string;
+    };
+    index: number;
+    moveItem: (dragIndex: number, hoverIndex: number) => void
+}
+
+interface DragItem {
+    index: number
+}
+
+export const Item: FunctionComponent<IFunctionComponent> = ({elem, index, moveItem}) => {
     const dispatch = useDispatch()
-    const { points } = useSelector(state => state.constructorBurger)
-    const itemRef = React.useRef();
-    const { _id } = e
+    const { points } = useSelector((state: any) => state.constructorBurger)
+    const itemRef = React.useRef<HTMLDivElement>(null);
+    const { _id } = elem
     const [{ handlerId }, drop] = useDrop({
         accept: 'items',
         collect(monitor) {
@@ -17,7 +32,7 @@ export const Item = ({e, index, moveItem}) => {
                 handlerId: monitor.getHandlerId(),
             };
         },
-        hover(item, monitor) {
+        hover(item: DragItem, monitor: DropTargetMonitor) {
             if (!itemRef.current) {
                 return;
             }
@@ -26,10 +41,11 @@ export const Item = ({e, index, moveItem}) => {
             if (dragIndex === hoverIndex) {
                 return;
             }
+            // @ts-ignore
             const hoverBoundingRect = itemRef.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             const clientOffset = monitor.getClientOffset();
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return;
             }
@@ -55,19 +71,14 @@ export const Item = ({e, index, moveItem}) => {
         <div ref={itemRef} style={{ opacity, cursor: 'move' }} data-handler-id={handlerId}>
             <DragIcon type="primary"/>
             <ConstructorElement
-                text={e.name}
-                price={e.price}
-                thumbnail={e.image}
+                text={elem.name}
+                price={elem.price}
+                thumbnail={elem.image}
                 handleClose={() => {
                     points.splice(index, 1)
-                    dispatch({type: DELETE_ITEM, points: points, price: e.price})
+                    dispatch({type: DELETE_ITEM, points: points, price: elem.price})
                 }}
             />
         </div>
     )
-}
-Item.propTypes = {
-    index: PropTypes.number.isRequired,
-    moveItem: PropTypes.func.isRequired,
-    e: PropTypes.object.isRequired
 }

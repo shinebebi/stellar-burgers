@@ -1,19 +1,19 @@
 import loginStyles from "../login.module.css";
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
+import React, {FC} from "react";
 import {Navigate, useNavigate} from 'react-router-dom';
 import {signIn} from "../../services/actions/login";
 import {useDispatch, useSelector} from "react-redux";
 
-export default function RegisterPage () {
+export const RegisterPage: FC = () => {
     const navigate = useNavigate();
-    const { hasError, name } = useSelector(state => state.auth)
+    const { hasError, name } = useSelector((state: any) => state.auth)
     const dispatch = useDispatch()
-    const [valueEmail, setValueEmail] = React.useState('')
-    const [valueName, setValueName] = React.useState('')
-    const inputNameRef = React.useRef(null)
-    const [valuePw, setValuePw] = React.useState('')
-    const onChange = e => {
+    const [valueEmail, setValueEmail] = React.useState<string>('')
+    const [valueName, setValueName] = React.useState<string>('')
+    const inputNameRef = React.useRef<HTMLInputElement>(null)
+    const [valuePw, setValuePw] = React.useState<string>('')
+    const onChange = (e: { target: HTMLInputElement; }) => {
         setValuePw(e.target.value)
     }
     if (!hasError && name) {
