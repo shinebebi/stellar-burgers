@@ -13,21 +13,33 @@ import {
 } from "../../services/actions/order-details";
 import {Points} from "./points";
 import PropTypes from "prop-types";
+import {useNavigate} from "react-router-dom";
 
 function BurgerConstructor ({onDropHandler}) {
     const dispatch = useDispatch()
     const { modalOrderOpen } = useSelector(state => state.constructorBurger)
-
+    const { name } = useSelector(state => state.auth)
+    const navigate = useNavigate()
+    // @ts-ignore
     return (
         <section className={burgerConstructorStyles.windowConstructor}>
             <Points onDropHandler={onDropHandler}/>
             <div className={burgerConstructorStyles.makeOrder__container}>
                 <FinalAmount/>
-                <Button type="primary" size="large" onClick={() => dispatch({type: MODAL_ORDER_OPEN})}>
+                <Button type="primary" size="large" onClick={() => {
+                    if (name) {
+                        dispatch({type: MODAL_ORDER_OPEN})
+                    } else {
+                        navigate('/login')
+                    }
+                }}>
                     Оформить заказ
                 </Button>
                 {modalOrderOpen &&
-                    <Modal header='' onClose={() => dispatch({type: MODAL_ORDER_CLOSE})}>
+                    <Modal header='' onClose={() => {
+                        dispatch({type: MODAL_ORDER_CLOSE})
+                        navigate('/')
+                    }}>
                         <OrderDetails/>
                     </Modal>
                 }

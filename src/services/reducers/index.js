@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux'
 
+import { authReducer } from "./auth";
+
 import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
@@ -7,7 +9,7 @@ import {
 } from '../actions/burger-ingredients'
 import {
     MODAL_INGREDIENT_OPEN,
-    MODAL_INGREDIENT_CLOSE
+    MODAL_INGREDIENT_CLOSE, LINK_INGREDIENT_OPEN
 } from '../actions/ingredient-details'
 import {
     MODAL_ORDER_OPEN,
@@ -28,7 +30,8 @@ const initialStateIngredient = {
     data: [],
 
     modalIngredientOpen: false,
-    ingredientDetails: {}
+    ingredientDetails: {},
+    linkIngredientOpen: false
 }
 
 const initialStateConstructor = {
@@ -77,6 +80,13 @@ export const ingredientsReducer = (state = initialStateIngredient, action) => {
                 ...state,
                 modalIngredientOpen: false,
                 ingredientDetails: {}
+            }
+        }
+        case LINK_INGREDIENT_OPEN: {
+            return {
+                ...state,
+                linkIngredientOpen: true,
+                ingredientDetails: action.elemInfo
             }
         }
         default: {
@@ -163,5 +173,6 @@ export const constructorReducer = (state = initialStateConstructor, action) => {
 
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,
-    constructorBurger: constructorReducer
+    constructorBurger: constructorReducer,
+    auth: authReducer
 });

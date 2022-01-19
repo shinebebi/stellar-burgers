@@ -23,7 +23,8 @@
     display: flex;
     justify-content: center;
     padding-bottom: 0;
-    margin-top: 16px;
+    margin-top: 32px;
+    text-decoration: none;
 }
 
 .header__logo {
@@ -36,4 +37,6 @@
     margin-top: 32px;
     height: 56px;
 }
-
+.link_active {
+    color: white;
+}

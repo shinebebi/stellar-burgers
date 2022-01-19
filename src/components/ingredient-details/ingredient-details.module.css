@@ -6,6 +6,8 @@
     text-align: center;
     width: 720px;
     height: auto;
+    position: center;
+    margin: auto;
 }
 
 .details_worth {

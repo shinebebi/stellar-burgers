@@ -26,7 +26,6 @@ export const Points = ({onDropHandler}) => {
             }
         }
     }
-
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', height: 650}} ref={dropTarget}>
             {setBun('top', 'верх')}
@@ -41,7 +40,10 @@ export const Points = ({onDropHandler}) => {
                                     points.splice(dragIndex, 1)
                                     points.splice(hoverIndex, 0, dragItem)*/
                                     points.splice(hoverIndex, 0, points.splice(dragIndex, 1)[0]);
-                                    dispatch({type: SORT_ITEMS, points: points})
+                                    const uniqueArray = points.filter(function(item, pos) {
+                                        return points.indexOf(item) === pos;
+                                    })
+                                    dispatch({type: SORT_ITEMS, points: uniqueArray})
                                 }
                                 }/>
                         })}
