@@ -5,16 +5,7 @@ import burgerIngredientsStyles from './burger-ingredients.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { MODAL_INGREDIENT_OPEN } from "../../services/actions/ingredient-details";
 import {Link} from "react-router-dom";
-
-interface IIngredient {
-    elemInfo: {
-        _id: string
-        type: string
-        image: string
-        price: number
-        name: string
-    }
-}
+import {IIngredient} from '../../utils/types'
 
 interface ITypeOfIngredient {
     list: Array<IIngredient>
@@ -26,17 +17,17 @@ const BurgerIngredients: FC<ReactNode> = ({children}) => {
     const sectionRef = React.useRef<any>()
     const dispatch = useDispatch()
 
-    const Ingredient: FC<IIngredient> = ({elemInfo}) => {
-        const { _id, type } = elemInfo
+    const Ingredient: FC<IIngredient> = ({elem}) => {
+        const { _id, type } = elem
         const [, dragRef] = useDrag({
             type: 'products',
             item: { _id, type }
         });
-        const fnc = (elemInfo: {type: string}) => {
+        const fnc = (elem: {type: string}) => {
             let count = points.filter(function (x: object) {
-                return x === elemInfo;
+                return x === elem;
             }).length
-            if (elemInfo.type === 'bun') {
+            if (elem.type === 'bun') {
                 return count + 1
             } else {
                 return count
@@ -45,21 +36,21 @@ const BurgerIngredients: FC<ReactNode> = ({children}) => {
         return (
             <Link to={{ pathname: `/ingredients/${_id}`}} className={burgerIngredientsStyles.link}>
                 <div
-                    onClick={() => dispatch({type: MODAL_INGREDIENT_OPEN, elemInfo: elemInfo})}
+                    onClick={() => dispatch({type: MODAL_INGREDIENT_OPEN, elemInfo: elem})}
                     className={burgerIngredientsStyles.ingredient_section}
                     ref={dragRef}
                 >
                     <div className={burgerIngredientsStyles.ingredient_counter}>
-                        {points.indexOf(elemInfo) !== -1 &&
-                        <Counter count={fnc(elemInfo)} size="default"/>
+                        {points.indexOf(elem) !== -1 &&
+                        <Counter count={fnc(elem)} size="default"/>
                         }
                     </div>
-                    <img src={elemInfo.image} className={burgerIngredientsStyles.ingredient_photo} alt={elemInfo.name}/>
+                    <img src={elem.image} className={burgerIngredientsStyles.ingredient_photo} alt={elem.name}/>
                     <div className={burgerIngredientsStyles.price_info}>
                         <CurrencyIcon type="primary"/>
-                        <p className="text text_type_digits-default">{elemInfo.price}</p>
+                        <p className="text text_type_digits-default">{elem.price}</p>
                     </div>
-                    <h4 className={`${burgerIngredientsStyles.ingredient_name} text text_type_main-default`}>{elemInfo.name}</h4>
+                    <h4 className={`${burgerIngredientsStyles.ingredient_name} text text_type_main-default`}>{elem.name}</h4>
                 </div>
             </Link>
         )
@@ -71,7 +62,7 @@ const BurgerIngredients: FC<ReactNode> = ({children}) => {
             <h3 className={`${burgerIngredientsStyles.ingredient_type} text text_type_main-medium`}>{type}</h3>
             <div className={burgerIngredientsStyles.ingredient_container}>
                 {list.map((elem: any) => (
-                    <Ingredient elemInfo={elem} key={elem._id}/>
+                    <Ingredient elem={elem} key={elem._id}/>
                 ))}
             </div>
         </section>

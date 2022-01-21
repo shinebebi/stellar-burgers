@@ -10,7 +10,7 @@ export const ProtectedAuthorized: FC<any> =({ children }) => {
     const dispatch = useDispatch()
     React.useEffect(() => {
         dispatch(getUserInfo())
-    }, []);
+    }, [dispatch]);
     return userAuth && name
         ? children
         : <Navigate

@@ -11,9 +11,11 @@ export const ResetPasswordPage: FC = () => {
     const inputEmailRef = React.useRef<HTMLInputElement>(null)
     const dispatch = useDispatch()
     const [valuePw, setValuePw] = React.useState<string>('')
-    const { name } = useSelector((state: any) => state.auth)
+    const { name, resetPw } = useSelector((state: any) => state.auth)
     const [request, setRequest] = React.useState<boolean>(false)
     const navigate = useNavigate();
+    const location = useLocation()
+    console.log(location)
     React.useEffect(() => {
         dispatch(getUserInfo())
     }, [])
@@ -33,7 +35,7 @@ export const ResetPasswordPage: FC = () => {
         return (
             <Navigate to="/login"/>
         )
-    } else if (name) {
+    } else if (name || !resetPw) {
         return (
             <Navigate to="/"/>
         )
@@ -45,7 +47,6 @@ export const ResetPasswordPage: FC = () => {
             <form className={styles.inputContainer} onSubmit={(e) => {
                 e.preventDefault()
                 restorePW()
-                dispatch({type: RESET_PASSWORD})
             }}>
                 <PasswordInput
                     onChange={onChange}

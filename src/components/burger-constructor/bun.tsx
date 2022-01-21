@@ -1,18 +1,13 @@
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {FunctionComponent} from 'react'
-
-interface IBunProps {
+import {IIngredient} from "../../utils/types";
+type TBunProps = IIngredient & {
     type?: 'top' | 'bottom';
     direction: string;
-    elem: {
-        name: string;
-        price: number;
-        image: string;
-    };
-}
+};
 
-export const Bun: FunctionComponent<IBunProps> = ({type, direction, elem}) => {
+export const Bun: FunctionComponent<TBunProps> = ({type, direction, elem}) => {
     return (
         <div className={burgerConstructorStyles.buns}>
             <ConstructorElement

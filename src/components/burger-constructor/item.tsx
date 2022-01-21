@@ -4,23 +4,18 @@ import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger
 import {DELETE_ITEM} from "../../services/actions/burger-constructor";
 import {useDispatch, useSelector} from "react-redux";
 import { XYCoord } from 'dnd-core'
+import {IIngredient} from "../../utils/types";
 
-interface IFunctionComponent {
-    elem: {
-        _id: string;
-        name: string;
-        price: number;
-        image: string;
-    };
+type TFunctionComponent = IIngredient & {
     index: number;
     moveItem: (dragIndex: number, hoverIndex: number) => void
-}
+};
 
 interface DragItem {
     index: number
 }
 
-export const Item: FunctionComponent<IFunctionComponent> = ({elem, index, moveItem}) => {
+export const Item: FunctionComponent<TFunctionComponent> = ({elem, index, moveItem}) => {
     const dispatch = useDispatch()
     const { points } = useSelector((state: any) => state.constructorBurger)
     const itemRef = React.useRef<HTMLDivElement>(null);

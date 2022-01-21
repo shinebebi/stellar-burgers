@@ -4,6 +4,7 @@
     flex-direction: column;
     margin-top: 40px;
     margin-bottom: 40px;
+    overflow-x:hidden;
 }
 .ingredients_section {
     width: 600px;

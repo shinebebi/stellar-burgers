@@ -11,7 +11,7 @@ export const LoginPage: FC = () => {
     const { loginSuccess, name } = useSelector((state: any) => state.auth)
     const navigate = useNavigate();
     const location = useLocation()
-    if (loginSuccess && name) {
+    if (name) {
         return (
             <Navigate to={location.state !== null ? location.state.path : '/'}/>
         )
