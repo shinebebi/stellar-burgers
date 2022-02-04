@@ -4,22 +4,23 @@ import styles from "./profile.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {postLogout} from "../../services/actions/logout";
 import {Navigate} from "react-router-dom";
-import {getUserInfo, patchUserInfo} from "../../services/actions/profile";
+import {patchUserInfo} from "../../services/actions/profile";
+import {FC} from "react";
 
-export default function ProfilePage() {
-    const { name, hasError, isLoading, email } = useSelector(state => state.auth)
-    const [profileBtn, setProfileBtn] = React.useState(true)
-    const [valueEmail, setValueEmail] = React.useState(email)
-    const [valueName, setValueName] = React.useState(name)
-    const [valuePw, setValuePw] = React.useState('')
-    const [historyBtn, setHistoryBtn] = React.useState(false)
-    const [logoutBtn, setLogoutBtn] = React.useState(false)
+export const ProfilePage: FC = () => {
+    const { name, hasError, isLoading, email } = useSelector((state: any) => state.auth)
+    const [profileBtn, setProfileBtn] = React.useState<boolean>(true)
+    const [valueEmail, setValueEmail] = React.useState<string>(email)
+    const [valueName, setValueName] = React.useState<string>(name)
+    const [valuePw, setValuePw] = React.useState<string>('')
+    const [historyBtn, setHistoryBtn] = React.useState<boolean>(false)
+    const [logoutBtn, setLogoutBtn] = React.useState<boolean>(false)
     const dispatch = useDispatch()
-    const inputNameRef = React.useRef(null)
-    const inputPwRef = React.useRef(null)
-    const typographyActive = `text text_type_main-medium ${styles.btnActive}`
-    const typographyInActive = `text text_type_main-medium ${styles.btnInactive}`
-    const updateClickBtn = (btn) => {
+    const inputNameRef = React.useRef<any>(null)
+    const inputPwRef = React.useRef<any>(null)
+    const typographyActive: string = `text text_type_main-medium ${styles.btnActive}`
+    const typographyInActive: string = `text text_type_main-medium ${styles.btnInactive}`
+    const updateClickBtn = (btn: string) => {
         if (btn === 'profile') {
             setProfileBtn(true)
             setHistoryBtn(false)

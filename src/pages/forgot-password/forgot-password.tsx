@@ -1,15 +1,16 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from "../login.module.css"
+import {RESET_PASSWORD} from "../../services/actions";
 import {Button, EmailInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate, Navigate } from 'react-router-dom';
 import { emailRequest } from "../../services/api";
-import {useSelector} from "react-redux";
-export default function ForgotPasswordPage () {
-    const {resetPw} = useSelector(state => state.auth)
-    const [valueEmail, setValueEmail] = React.useState('')
-    const [eSuccess, setESuccess] = React.useState(false)
+import {useDispatch, useSelector} from "react-redux";
+export const ForgotPasswordPage: FC = () => {
+    const {name} = useSelector((state: any) => state.auth)
+    const [valueEmail, setValueEmail] = React.useState<string>('')
+    const [eSuccess, setESuccess] = React.useState<boolean>(false)
     const navigate = useNavigate();
-    const { name } = useSelector(state => state.auth)
+    const dispatch = useDispatch()
     const restorePW = () => {
         emailRequest(valueEmail)
             .then(data => {
@@ -24,16 +25,15 @@ export default function ForgotPasswordPage () {
         return (
             <Navigate to="/reset-password"/>
         )
-    } else if (resetPw) {
-        return (
-            <Navigate to="/"/>
-        )
+    } else if (name) {
+        return <Navigate to="/"/>
     }
     return (
         <div className={styles.container}>
             <h1 className={`text text_type_main-medium`}>Восстановление пароля</h1>
             <form className={styles.inputContainer} onSubmit={(e) => {
                 e.preventDefault()
+                dispatch({type: RESET_PASSWORD})
                 restorePW()
             }}>
                 <EmailInput onChange={e => setValueEmail(e.target.value)} value={valueEmail} name={'email'} />

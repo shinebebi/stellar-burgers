@@ -1,7 +1,7 @@
 import modalOverlayStyles from "./modal-overlay.module.css";
-import React from "react";
+import React, {FC} from "react";
 
-function ModalOverlay () {
+const ModalOverlay: FC = () => {
     return (
         <div className={modalOverlayStyles.modal__overlay}/>
     )

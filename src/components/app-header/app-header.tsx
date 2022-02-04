@@ -1,16 +1,16 @@
-import React from 'react'
+import React, {FunctionComponent} from 'react'
 import { Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useLocation, Link } from 'react-router-dom'
 import appHeaderStyles from './app-header.module.css';
-export default function AppHeader() {
+export const AppHeader: FunctionComponent = () => {
     const location = useLocation();
-    const setActive = (url) => {
+    const setActive = (url: string) => {
         if (location.pathname === '/profile' && url === '/profile') {
             return true
         }
     }
-    const typographyActive = `text text_type_main-default ${appHeaderStyles.link_active}`
-    const typographyInActive = "text text_type_main-default text_color_inactive"
+    const typographyActive: string = `text text_type_main-default ${appHeaderStyles.link_active}`
+    const typographyInActive: string = "text text_type_main-default text_color_inactive"
     return (
         <header className={appHeaderStyles.header}>
             <Link className={appHeaderStyles.navigation__point} to={{pathname: '/'}}>

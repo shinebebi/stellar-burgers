@@ -5,13 +5,16 @@ import React, {useEffect} from "react";
 import {LINK_INGREDIENT_OPEN, MODAL_INGREDIENT_OPEN} from "../../services/actions/ingredient-details";
 import {getIngredients} from "../../services/actions/burger-ingredients";
 
+interface IIngredientDetail {
+    _id: string
+}
 function IngredientDetail() {
     const { id } = useParams()
     const dispatch = useDispatch()
-    const { data } = useSelector(state => state.ingredients)
-    const { ingredientDetails } = useSelector(state => state.ingredients)
+    const { data } = useSelector((state: any) => state.ingredients)
+    const { ingredientDetails } = useSelector((state: any) => state.ingredients)
     useEffect(() => {
-        dispatch({type: LINK_INGREDIENT_OPEN, elemInfo: data.filter(e => e._id === id)[0]})
+        dispatch({type: LINK_INGREDIENT_OPEN, elemInfo: data.filter((e: IIngredientDetail) => e._id === id)[0]})
     }, [data])
     return (
         <>

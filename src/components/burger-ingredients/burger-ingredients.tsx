@@ -1,27 +1,33 @@
-import React from 'react'
+import React, {FC, ReactNode} from 'react'
 import { useDrag } from "react-dnd";
 import { Counter, CurrencyIcon, Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { MODAL_INGREDIENT_OPEN } from "../../services/actions/ingredient-details";
 import {Link} from "react-router-dom";
+import {IIngredient} from '../../utils/types'
 
-
-function BurgerIngredients ({children}) {
-    const { data, modalIngredientOpen } = useSelector(state => state.ingredients)
-    const { points } = useSelector(state => state.constructorBurger)
-    const sectionRef = React.useRef()
+interface ITypeOfIngredient {
+    list: Array<IIngredient>
+    type: string
+}
+const BurgerIngredients: FC<ReactNode> = ({children}) => {
+    const { data, modalIngredientOpen } = useSelector((state: any) => state.ingredients)
+    const { points } = useSelector((state: any) => state.constructorBurger)
+    const sectionRef = React.useRef<any>()
     const dispatch = useDispatch()
 
-    const Ingredient = ({elemInfo}) => {
-        const { _id, type } = elemInfo
+    const Ingredient: FC<IIngredient> = ({elem}) => {
+        const { _id, type } = elem
         const [, dragRef] = useDrag({
             type: 'products',
             item: { _id, type }
         });
-        const fnc = (elemInfo) => {
-            let count = points.filter(x => x === elemInfo).length
-            if (elemInfo.type === 'bun') {
+        const fnc = (elem: {type: string}) => {
+            let count = points.filter(function (x: object) {
+                return x === elem;
+            }).length
+            if (elem.type === 'bun') {
                 return count + 1
             } else {
                 return count
@@ -30,33 +36,33 @@ function BurgerIngredients ({children}) {
         return (
             <Link to={{ pathname: `/ingredients/${_id}`}} className={burgerIngredientsStyles.link}>
                 <div
-                    onClick={() => dispatch({type: MODAL_INGREDIENT_OPEN, elemInfo: elemInfo})}
+                    onClick={() => dispatch({type: MODAL_INGREDIENT_OPEN, elemInfo: elem})}
                     className={burgerIngredientsStyles.ingredient_section}
                     ref={dragRef}
                 >
                     <div className={burgerIngredientsStyles.ingredient_counter}>
-                        {points.indexOf(elemInfo) !== -1 &&
-                        <Counter count={fnc(elemInfo)} size="default"/>
+                        {points.indexOf(elem) !== -1 &&
+                        <Counter count={fnc(elem)} size="default"/>
                         }
                     </div>
-                    <img src={elemInfo.image} className={burgerIngredientsStyles.ingredient_photo} alt={elemInfo.name}/>
+                    <img src={elem.image} className={burgerIngredientsStyles.ingredient_photo} alt={elem.name}/>
                     <div className={burgerIngredientsStyles.price_info}>
                         <CurrencyIcon type="primary"/>
-                        <p className="text text_type_digits-default">{elemInfo.price}</p>
+                        <p className="text text_type_digits-default">{elem.price}</p>
                     </div>
-                    <h4 className={`${burgerIngredientsStyles.ingredient_name} text text_type_main-default`}>{elemInfo.name}</h4>
+                    <h4 className={`${burgerIngredientsStyles.ingredient_name} text text_type_main-default`}>{elem.name}</h4>
                 </div>
             </Link>
         )
     }
 
 
-    const TypeOfIngredient = ({ list, type }) => (
+    const TypeOfIngredient: FC<ITypeOfIngredient> = ({ list, type }) => (
         <section>
             <h3 className={`${burgerIngredientsStyles.ingredient_type} text text_type_main-medium`}>{type}</h3>
             <div className={burgerIngredientsStyles.ingredient_container}>
-                {list.map((elem)=>(
-                    <Ingredient elemInfo={elem} key={elem._id}/>
+                {list.map((elem: any) => (
+                    <Ingredient elem={elem} key={elem._id}/>
                 ))}
             </div>
         </section>
@@ -98,9 +104,9 @@ function BurgerIngredients ({children}) {
             <h2 className={`text text_type_main-large ${burgerIngredientsStyles.constructor__header}`}>Соберите бургер</h2>
             <TabElement/>
             <section className={burgerIngredientsStyles.ingredients_section} ref={sectionRef}>
-                <TypeOfIngredient list={data.filter(e => e.type === "bun")} type="Булки"/>
-                <TypeOfIngredient list={data.filter(e => e.type === "sauce")} type="Соусы"/>
-                <TypeOfIngredient list={data.filter(e => e.type === "main")} type="Начинки"/>
+                <TypeOfIngredient list={data.filter((e: ITypeOfIngredient) => e.type === "bun")} type="Булки"/>
+                <TypeOfIngredient list={data.filter((e: ITypeOfIngredient) => e.type === "sauce")} type="Соусы"/>
+                <TypeOfIngredient list={data.filter((e: ITypeOfIngredient) => e.type === "main")} type="Начинки"/>
             </section>
             {modalIngredientOpen && children}
         </section>
