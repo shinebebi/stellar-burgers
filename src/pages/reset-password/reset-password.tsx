@@ -4,14 +4,13 @@ import {Button, Input, PasswordInput} from '@ya.praktikum/react-developer-burger
 import {Navigate, useLocation, useNavigate} from 'react-router-dom';
 import { passwordReset } from "../../services/api";
 import {getUserInfo} from "../../services/actions/profile";
-import {useDispatch, useSelector} from "react-redux";
-import {RESET_PASSWORD} from "../../services/actions";
+import {useSelector, useDispatch} from '../../utils/hooks'
 export const ResetPasswordPage: FC = () => {
     const [valueECode, setValueECode] = React.useState<string>('')
     const inputEmailRef = React.useRef<HTMLInputElement>(null)
     const dispatch = useDispatch()
     const [valuePw, setValuePw] = React.useState<string>('')
-    const { name, resetPw } = useSelector((state: any) => state.auth)
+    const { name, resetPw } = useSelector((state) => state.auth)
     const [request, setRequest] = React.useState<boolean>(false)
     const navigate = useNavigate();
     const location = useLocation()

@@ -1,11 +1,11 @@
 import React, {FC} from "react";
 import done from "../../images/done.png"
 import OrderDetailsStyles from "./order-details.module.css"
-import { useSelector, useDispatch } from "react-redux";
+import {useSelector, useDispatch} from '../../utils/hooks'
 import { getOrderDetails } from "../../services/actions/order-details";
 
 const OrderDetails: FC = () => {
-    const { orderNumber, isLoading, hasError } = useSelector((state: any) => state.constructorBurger)
+    const { orderNumber, isLoading, hasError } = useSelector((state) => state.constructorBurger)
     const dispatch = useDispatch()
     React.useEffect(() => {
         dispatch(getOrderDetails())

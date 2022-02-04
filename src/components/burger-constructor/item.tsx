@@ -1,12 +1,12 @@
 import React, {FunctionComponent} from "react";
 import {useDrag, useDrop, DropTargetMonitor} from "react-dnd";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {DELETE_ITEM} from "../../services/actions/burger-constructor";
-import {useDispatch, useSelector} from "react-redux";
+import {deleteItemAction} from "../../services/actions/burger-constructor";
+import {useSelector, useDispatch} from '../../utils/hooks'
 import { XYCoord } from 'dnd-core'
-import {IIngredient} from "../../utils/types";
+import {TElem} from "../../utils/types";
 
-type TFunctionComponent = IIngredient & {
+type TFunctionComponent = TElem & {
     index: number;
     moveItem: (dragIndex: number, hoverIndex: number) => void
 };
@@ -17,7 +17,7 @@ interface DragItem {
 
 export const Item: FunctionComponent<TFunctionComponent> = ({elem, index, moveItem}) => {
     const dispatch = useDispatch()
-    const { points } = useSelector((state: any) => state.constructorBurger)
+    const { points } = useSelector((state) => state.constructorBurger)
     const itemRef = React.useRef<HTMLDivElement>(null);
     const { _id } = elem
     const [{ handlerId }, drop] = useDrop({
@@ -71,7 +71,7 @@ export const Item: FunctionComponent<TFunctionComponent> = ({elem, index, moveIt
                 thumbnail={elem.image}
                 handleClose={() => {
                     points.splice(index, 1)
-                    dispatch({type: DELETE_ITEM, points: points, price: elem.price})
+                    dispatch(deleteItemAction(points, elem.price))
                 }}
             />
         </div>

@@ -1,21 +1,30 @@
 import {BrowserRouter as Router, Routes, Route, useNavigate} from 'react-router-dom';
 import {AppHeader} from "./app-header/app-header";
-import { ConstructorPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage } from "../pages"
+import { ConstructorPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, FeedPage, ProfileOrders } from "../pages"
 import {ProtectedAuthorized} from "./protectedRoutes/protectedAuthorized";
 import IngredientDetail from "./ingredient-details/ingredient-details";
 import React, {FC, useEffect} from "react";
 import Modal from "./modal/modal";
-import {MODAL_INGREDIENT_CLOSE} from "../services/actions/ingredient-details";
-import {useDispatch, useSelector} from "react-redux";
+import {modalCloseAction} from "../services/actions/burger-ingredients";
+import {useSelector, useDispatch} from '../utils/hooks'
 import {getIngredients} from "../services/actions/burger-ingredients";
+import {infoOrderCloseAction} from "../services/actions/feed";
 import {getUserInfo} from "../services/actions/profile";
+import {OrderInfo} from "./order-info/order-info";
+import {wsConnectionStart, wsProfileConnectionStart} from "../services/actions/ws";
+import {getCookie} from "../services/utils";
+
 export const App: FC = () => {
-    const { data, modalIngredientOpen } = useSelector((state: any) => state.ingredients)
+    const { data, modalIngredientOpen } = useSelector((state) => state.ingredients)
+    const { modalInfoOrderOpen } = useSelector(state => state.feed)
+    const { orders } = useSelector(state => state.ws)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     useEffect(() => {
         dispatch(getIngredients())
         dispatch(getUserInfo())
+        dispatch(wsConnectionStart());
+        dispatch(wsProfileConnectionStart());
     }, [])
     return (
         <>
@@ -31,18 +40,50 @@ export const App: FC = () => {
                         <ProfilePage/>
                     </ProtectedAuthorized>
                 }/>
+                <Route path="/profile/orders" element={
+                    <ProtectedAuthorized>
+                        <ProfileOrders/>
+                    </ProtectedAuthorized>
+                }/>
 
                 <Route
                     path={`/ingredients/:id`}
                     element={modalIngredientOpen && data ?
                         <ConstructorPage>
                             <Modal header="Детали Ингредиента" onClose={() => {
-                                dispatch({type: MODAL_INGREDIENT_CLOSE})
+                                dispatch(modalCloseAction())
                                 navigate('/')
                             }}>
                                 <IngredientDetail/>
                             </Modal>
                         </ConstructorPage> : <IngredientDetail/>
+                    }
+                />
+                <Route path="/feed" element={<FeedPage/>}/>
+                <Route
+                    path='/feed/:id'
+                    element={modalInfoOrderOpen && orders ?
+                        <FeedPage>
+                            <Modal header='' onClose={() => {
+                                dispatch(infoOrderCloseAction())
+                                navigate('/feed')
+                            }}>
+                                <OrderInfo/>
+                            </Modal>
+                        </FeedPage> : <OrderInfo/>
+                    }
+                />
+                <Route
+                    path='/profile/orders/:id'
+                    element={modalInfoOrderOpen && orders ?
+                        <ProfileOrders>
+                            <Modal header='' onClose={() => {
+                                dispatch(infoOrderCloseAction())
+                                navigate('/profile/orders')
+                            }}>
+                                <OrderInfo/>
+                            </Modal>
+                        </ProfileOrders> : <OrderInfo/>
                     }
                 />
             </Routes>

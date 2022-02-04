@@ -1,9 +1,23 @@
-import {POST_LOGIN_REQUEST, POST_LOGIN_SUCCESS, POST_LOGIN_FAILED, RESET_PASSWORD} from "../actions";
-import {POST_LOGOUT_REQUEST, POST_LOGOUT_SUCCESS, POST_LOGOUT_FAILED} from "../actions/logout";
-import {GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILED} from "../actions/profile";
+import {
+    POST_LOGIN_REQUEST, POST_LOGIN_SUCCESS, POST_LOGIN_FAILED,
+    RESET_PASSWORD,
+    POST_LOGOUT_REQUEST, POST_LOGOUT_SUCCESS, POST_LOGOUT_FAILED,
+    GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILED
+} from "../constants"
+import {TAuthActions} from "../actions/profile";
 
+export type TAuthState = {
+    name: string,
+    email: string,
+    password: string,
+    isLoading: boolean,
+    hasError: boolean,
+    userAuth: boolean,
+    resetPw: boolean,
+    loginSuccess: boolean
+};
 
-const initialStateAuth = {
+const initialStateAuth: TAuthState = {
     name: '',
     email: '',
     password: '',
@@ -14,7 +28,7 @@ const initialStateAuth = {
     loginSuccess: false
 }
 
-export const authReducer = (state = initialStateAuth, action) => {
+export const authReducer = (state = initialStateAuth, action: TAuthActions): TAuthState => {
     switch (action.type) {
         case POST_LOGIN_REQUEST: {
             return {
@@ -76,11 +90,13 @@ export const authReducer = (state = initialStateAuth, action) => {
             }
         } case GET_USER_FAILED: {
             return {
+                ...state,
                 isLoading: false,
                 hasError: true
             }
         } case RESET_PASSWORD: {
             return {
+                ...state,
                 resetPw: true
             }
         }

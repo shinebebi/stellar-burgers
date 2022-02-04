@@ -1,12 +1,12 @@
 import React, {FC} from 'react';
 import styles from "../login.module.css"
-import {RESET_PASSWORD} from "../../services/actions";
+import {passwordAction} from "../../services/actions/profile";
 import {Button, EmailInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate, Navigate } from 'react-router-dom';
 import { emailRequest } from "../../services/api";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector, useDispatch} from '../../utils/hooks'
 export const ForgotPasswordPage: FC = () => {
-    const {name} = useSelector((state: any) => state.auth)
+    const {name} = useSelector((state) => state.auth)
     const [valueEmail, setValueEmail] = React.useState<string>('')
     const [eSuccess, setESuccess] = React.useState<boolean>(false)
     const navigate = useNavigate();
@@ -33,7 +33,7 @@ export const ForgotPasswordPage: FC = () => {
             <h1 className={`text text_type_main-medium`}>Восстановление пароля</h1>
             <form className={styles.inputContainer} onSubmit={(e) => {
                 e.preventDefault()
-                dispatch({type: RESET_PASSWORD})
+                dispatch(passwordAction())
                 restorePW()
             }}>
                 <EmailInput onChange={e => setValueEmail(e.target.value)} value={valueEmail} name={'email'} />

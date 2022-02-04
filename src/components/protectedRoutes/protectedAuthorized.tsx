@@ -1,6 +1,6 @@
 import {Navigate, useLocation} from 'react-router-dom';
 import React, {FC, ReactNode} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector, useDispatch} from '../../utils/hooks'
 import {getUserInfo} from "../../services/actions/profile";
 
 export const ProtectedAuthorized: FC<any> =({ children }) => {

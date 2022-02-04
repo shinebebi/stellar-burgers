@@ -1,9 +1,8 @@
 import IngredientDetailsStyles from "./ingredient-details.module.css"
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector, useDispatch} from '../../utils/hooks'
 import {useParams} from "react-router-dom";
 import React, {useEffect} from "react";
-import {LINK_INGREDIENT_OPEN, MODAL_INGREDIENT_OPEN} from "../../services/actions/ingredient-details";
-import {getIngredients} from "../../services/actions/burger-ingredients";
+import {linkOpenAction} from "../../services/actions/burger-ingredients";
 
 interface IIngredientDetail {
     _id: string
@@ -11,10 +10,10 @@ interface IIngredientDetail {
 function IngredientDetail() {
     const { id } = useParams()
     const dispatch = useDispatch()
-    const { data } = useSelector((state: any) => state.ingredients)
-    const { ingredientDetails } = useSelector((state: any) => state.ingredients)
+    const { data } = useSelector((state) => state.ingredients)
+    const { ingredientDetails } = useSelector((state) => state.ingredients)
     useEffect(() => {
-        dispatch({type: LINK_INGREDIENT_OPEN, elemInfo: data.filter((e: IIngredientDetail) => e._id === id)[0]})
+        dispatch(linkOpenAction(data.filter((e: IIngredientDetail) => e._id === id)[0]))
     }, [data])
     return (
         <>
