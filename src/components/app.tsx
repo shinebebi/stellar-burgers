@@ -11,8 +11,6 @@ import {getIngredients} from "../services/actions/burger-ingredients";
 import {infoOrderCloseAction} from "../services/actions/feed";
 import {getUserInfo} from "../services/actions/profile";
 import {OrderInfo} from "./order-info/order-info";
-import {wsConnectionStart, wsProfileConnectionStart} from "../services/actions/ws";
-import {getCookie} from "../services/utils";
 
 export const App: FC = () => {
     const { data, modalIngredientOpen } = useSelector((state) => state.ingredients)
@@ -23,8 +21,6 @@ export const App: FC = () => {
     useEffect(() => {
         dispatch(getIngredients())
         dispatch(getUserInfo())
-        dispatch(wsConnectionStart());
-        dispatch(wsProfileConnectionStart());
     }, [])
     return (
         <>
@@ -36,9 +32,7 @@ export const App: FC = () => {
                 <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
                 <Route path="/reset-password" element={<ResetPasswordPage/>}/>
                 <Route path="/profile" element={
-                    <ProtectedAuthorized>
-                        <ProfilePage/>
-                    </ProtectedAuthorized>
+                    <ProtectedAuthorized children={<ProfilePage/>}/>
                 }/>
                 <Route path="/profile/orders" element={
                     <ProtectedAuthorized>

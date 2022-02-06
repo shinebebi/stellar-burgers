@@ -6,6 +6,13 @@ import {TConstructorActions} from "../services/actions/order-details";
 import {TAuthActions} from "../services/actions/profile";
 import {TOrdersActions} from '../services/actions/feed'
 import {TWsActions} from "../services/actions/ws";
+import {
+    WS_CONNECTION_START, WS_CONNECTION_SUCCESS,
+    WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR,
+    WS_GET_ORDERS, WS_CONNECTION_PROFILE_ORDERS_START,
+    WS_CONNECTION_USER_SUCCESS, WS_CONNECTION_USER_ERROR,
+    WS_CONNECTION_USER_CLOSED, WS_GET_USER_ORDERS
+} from "../services/constants";
 
 export type IIngredient = {
     _id: string,
@@ -21,27 +28,6 @@ export type IIngredient = {
     image_large: string,
     __v: string
 };
-
-/*export type IOrders = {
-    "success": true,
-    "orders": [
-        {
-            "ingredients": [
-                "60d3463f7034a000269f45e7",
-                "60d3463f7034a000269f45e9",
-                "60d3463f7034a000269f45e8",
-                "60d3463f7034a000269f45ea"
-            ],
-            "_id": "",
-            "status": "done",
-            "number": 0,
-            "createdAt": "2021-06-23T14:43:22.587Z",
-            "updatedAt": "2021-06-23T14:43:22.603Z"
-        }
-    ],
-    "total": 1,
-    "totalToday": 1
-}*/
 
 export type IOrders = {
     ingredients: Array<string>,
@@ -62,6 +48,15 @@ export type TElem = {
 export type TOrder = {
     elem: TClickOrder
 }
+
+export interface TWsAction {
+    wsInit: typeof WS_CONNECTION_PROFILE_ORDERS_START | typeof WS_CONNECTION_START,
+    onOpen: typeof WS_CONNECTION_SUCCESS | typeof WS_CONNECTION_USER_SUCCESS,
+    onClose: typeof WS_CONNECTION_CLOSED | typeof WS_CONNECTION_USER_CLOSED,
+    onError: typeof WS_CONNECTION_ERROR | typeof WS_CONNECTION_USER_ERROR,
+    onMessage: typeof WS_GET_USER_ORDERS | typeof WS_GET_ORDERS
+}
+
 export type TApplicationActions = TIngredientsActions | TConstructorActions | TAuthActions | TOrdersActions | TWsActions;
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

@@ -11,8 +11,8 @@ const OrderDetails: FC = () => {
         dispatch(getOrderDetails())
     }, [dispatch])
     return (
-        <div>
-            {isLoading && 'Загрузка...'}
+        <div className={OrderDetailsStyles.main}>
+            {isLoading && 'Идет загрузка... Подождите 15 секунд'}
             {hasError && 'Произошла ошибка'}
             {!isLoading && !hasError &&
                 <div className={OrderDetailsStyles.infoOrder__container}>

@@ -4,13 +4,12 @@ import {
     WS_CONNECTION_PROFILE_ORDERS_START,
     WS_CONNECTION_START,
     WS_CONNECTION_SUCCESS,
-    WS_GET_ORDERS,
-    WS_GET_USER_ORDERS,
-    WS_CONNECTION_USER_SUCCESS,
+    WS_CONNECTION_USER_CLOSED,
     WS_CONNECTION_USER_ERROR,
-    WS_CONNECTION_USER_CLOSED
+    WS_CONNECTION_USER_SUCCESS,
+    WS_GET_ORDERS,
+    WS_GET_USER_ORDERS
 } from '../constants';
-import {IOrders} from "../../utils/types";
 
 export interface IWsConnectionSuccess {
     readonly type: typeof WS_CONNECTION_SUCCESS
@@ -37,10 +36,8 @@ export interface IWsConnectionUserClosed {
 }
 
 export interface IWsGetOrders {
-    readonly type: typeof WS_GET_ORDERS
-    orders: Array<IOrders>,
-    readonly total: number,
-    readonly totalToday: number
+    readonly type: typeof WS_GET_ORDERS,
+    payload: any
 }
 
 export interface IWsConnectionStart {
@@ -53,7 +50,7 @@ export interface IWsProfileConnectionStart {
 
 export interface IWsGetUserOrders {
     readonly type: typeof WS_GET_USER_ORDERS
-    userOrders: Array<IOrders>
+    payload: any
 }
 
 export type TWsActions =
@@ -80,11 +77,16 @@ export const wsConnectionClosed = (): IWsConnectionClosed  => ({
     type: WS_CONNECTION_CLOSED
 })
 
-export const wsGetOrders = (orders: Array<IOrders>, total: number, totalToday: number): IWsGetOrders => ({
+/*export const wsGetOrders = (orders: Array<IOrders>, total: number, totalToday: number): IWsGetOrders => ({
     type: WS_GET_ORDERS,
     orders,
     total,
     totalToday
+})*/
+
+export const wsGetOrders = (payload: any): IWsGetOrders => ({
+    type: WS_GET_ORDERS,
+    payload
 })
 
 export const wsConnectionStart = (): IWsConnectionStart => ({
@@ -95,16 +97,11 @@ export const wsProfileConnectionStart = (): IWsProfileConnectionStart => ({
     type: WS_CONNECTION_PROFILE_ORDERS_START
 })
 
-export const wsGetUserOrders = (userOrders: Array<IOrders>): IWsGetUserOrders => ({
+export const wsGetUserOrders = (payload: any): IWsGetUserOrders => ({
     type: WS_GET_USER_ORDERS,
-    userOrders
+    payload
 })
 
-
-
-/*export const wsSendMessage = message => {
-    return {
-        type: WS_SEND_MESSAGE,
-        payload: message
-    };
-};*/
+export const wsUserConnectionClosed = (): IWsConnectionUserClosed => ({
+    type: WS_CONNECTION_USER_CLOSED
+})

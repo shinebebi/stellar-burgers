@@ -3,8 +3,11 @@ import React, {FC, ReactNode} from "react";
 import {useSelector, useDispatch} from '../../utils/hooks'
 import {getUserInfo} from "../../services/actions/profile";
 
-export const ProtectedAuthorized: FC<any> =({ children }) => {
-    // @ts-ignore
+interface IProtectedAuthorized {
+    children: ReactNode | any
+}
+
+export const ProtectedAuthorized: FC<IProtectedAuthorized> = ({ children }) => {
     const {name, userAuth} = useSelector(state => state.auth)
     const location = useLocation();
     const dispatch = useDispatch()

@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from '../../utils/hooks'
 import {Navigate} from "react-router-dom";
 import {patchUserInfo} from "../../services/actions/profile";
 import {FC} from "react";
-import {ProfileTab} from "../../utils/fncs";
+import {ProfileTab} from "../../components/profile-tab/profile-tab";
 
 export const ProfilePage: FC = () => {
     const { name, hasError, isLoading, email } = useSelector((state) => state.auth)

@@ -28,7 +28,7 @@ export const Orders: FC<IOrdersElement> = ({children,link, orders}) => {
                 <div className={style.order__container} onClick={() => dispatch(infoOrderOpenAction(elem))}>
                     <div className={style.info}>
                         <p className="text text_type_digits-default">#{elem.number}</p>
-                        <p className={`text text_type_main-default text_color_inactive ${style.date}`}>{elem.createdAt}</p>
+                        <p className={`text text_type_main-default text_color_inactive ${style.date}`}>{elem.createdAt.slice(0, 10)} {elem.createdAt.slice(11, 19)}</p>
                     </div>
                     <h3 className='text text_type_main-medium' style={{marginLeft: 24}}>{elem.name}</h3>
                     <div className={style.desc}>

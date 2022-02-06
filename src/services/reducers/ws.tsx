@@ -53,14 +53,14 @@ export const wsReducer = (state = initialState, action: TWsActions): IWsState =>
         case WS_GET_ORDERS:
             return {
                 ...state,
-                total: action.total,
-                totalToday: action.totalToday,
-                orders: action.orders
+                total: action.payload.total,
+                totalToday: action.payload.totalToday,
+                orders: action.payload.orders
             };
         case WS_GET_USER_ORDERS:
             return {
                 ...state,
-                userOrders: action.userOrders
+                userOrders: action.payload.orders
             };
         case WS_CONNECTION_USER_SUCCESS:
             return {
