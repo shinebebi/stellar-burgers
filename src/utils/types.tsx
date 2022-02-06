@@ -47,14 +47,21 @@ export type TElem = {
 };
 export type TOrder = {
     elem: TClickOrder
-}
+};
+
+export type TPayload = {
+    orders: Array<IOrders>
+    total: number,
+    totalToday: number
+};
 
 export interface TWsAction {
-    wsInit: typeof WS_CONNECTION_PROFILE_ORDERS_START | typeof WS_CONNECTION_START,
+    wsInit?: typeof WS_CONNECTION_START,
     onOpen: typeof WS_CONNECTION_SUCCESS | typeof WS_CONNECTION_USER_SUCCESS,
     onClose: typeof WS_CONNECTION_CLOSED | typeof WS_CONNECTION_USER_CLOSED,
     onError: typeof WS_CONNECTION_ERROR | typeof WS_CONNECTION_USER_ERROR,
-    onMessage: typeof WS_GET_USER_ORDERS | typeof WS_GET_ORDERS
+    onMessage: typeof WS_GET_USER_ORDERS | typeof WS_GET_ORDERS,
+    wsUserInit?: typeof WS_CONNECTION_PROFILE_ORDERS_START
 }
 
 export type TApplicationActions = TIngredientsActions | TConstructorActions | TAuthActions | TOrdersActions | TWsActions;

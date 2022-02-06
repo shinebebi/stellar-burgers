@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import burgerIngredientsStyles from "../burger-ingredients/burger-ingredients.module.css";
 import {infoOrderOpenAction} from '../../services/actions/feed'
 import {finalPrice} from "../../utils/fncs";
-import {IOrders, TClickOrder, TOrder} from "../../utils/types";
+import {IIngredient, IOrders, TClickOrder, TOrder} from "../../utils/types";
 import { fullArray } from "../../utils/fncs";
 
 interface IOrdersElement {
@@ -19,7 +19,7 @@ export const Orders: FC<IOrdersElement> = ({children,link, orders}) => {
     const { modalInfoOrderOpen } = useSelector(state => state.feed)
     const { data } = useSelector(state => state.ingredients)
     const dispatch = useDispatch()
-    const ordersArray: any = fullArray(orders, data)
+    const ordersArray: Array<TClickOrder> = fullArray(orders, data)
 
     const Order: FC<TOrder> = ({elem}) => {
         const orderArrayCut = elem.ingredients.slice(0, 6)
@@ -33,7 +33,7 @@ export const Orders: FC<IOrdersElement> = ({children,link, orders}) => {
                     <h3 className='text text_type_main-medium' style={{marginLeft: 24}}>{elem.name}</h3>
                     <div className={style.desc}>
                         <div className={style.images}>
-                            {orderArrayCut.map(function (e: any, index: number) {
+                            {orderArrayCut.map(function (e: IIngredient, index: number) {
                                 if (index === 5 && elem.ingredients.length > 6) {
                                     return (
                                         <div className={style.last} key={index}>

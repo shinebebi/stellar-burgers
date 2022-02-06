@@ -10,6 +10,7 @@ import {
     WS_GET_ORDERS,
     WS_GET_USER_ORDERS
 } from '../constants';
+import {TPayload} from "../../utils/types";
 
 export interface IWsConnectionSuccess {
     readonly type: typeof WS_CONNECTION_SUCCESS
@@ -37,7 +38,7 @@ export interface IWsConnectionUserClosed {
 
 export interface IWsGetOrders {
     readonly type: typeof WS_GET_ORDERS,
-    payload: any
+    payload: TPayload
 }
 
 export interface IWsConnectionStart {
@@ -50,7 +51,7 @@ export interface IWsProfileConnectionStart {
 
 export interface IWsGetUserOrders {
     readonly type: typeof WS_GET_USER_ORDERS
-    payload: any
+    payload: TPayload
 }
 
 export type TWsActions =
@@ -77,14 +78,7 @@ export const wsConnectionClosed = (): IWsConnectionClosed  => ({
     type: WS_CONNECTION_CLOSED
 })
 
-/*export const wsGetOrders = (orders: Array<IOrders>, total: number, totalToday: number): IWsGetOrders => ({
-    type: WS_GET_ORDERS,
-    orders,
-    total,
-    totalToday
-})*/
-
-export const wsGetOrders = (payload: any): IWsGetOrders => ({
+export const wsGetOrders = (payload: TPayload): IWsGetOrders => ({
     type: WS_GET_ORDERS,
     payload
 })
@@ -97,7 +91,7 @@ export const wsProfileConnectionStart = (): IWsProfileConnectionStart => ({
     type: WS_CONNECTION_PROFILE_ORDERS_START
 })
 
-export const wsGetUserOrders = (payload: any): IWsGetUserOrders => ({
+export const wsGetUserOrders = (payload: TPayload): IWsGetUserOrders => ({
     type: WS_GET_USER_ORDERS,
     payload
 })

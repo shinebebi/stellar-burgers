@@ -6,7 +6,7 @@ import style from "./order-info.module.css";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {finalPrice} from "../../utils/fncs";
 import { fullArray } from "../../utils/fncs";
-import {IIngredient, TElem} from "../../utils/types";
+import {IIngredient, TClickOrder, TElem, TOrder} from "../../utils/types";
 import {wsConnectionStart, wsProfileConnectionStart} from "../../services/actions/ws";
 
 export const OrderInfo: FC = () => {
@@ -46,11 +46,11 @@ export const OrderInfo: FC = () => {
     }, [])
     useEffect(() => {
         if (location.pathname === `/feed/${id}` && orders !== undefined) {
-            const ordersArray: any = fullArray(orders, data)
+            const ordersArray: Array<TClickOrder> = fullArray(orders, data)
             dispatch(linkOpenInfoOrderAction(ordersArray.filter((e: any) => e._id === id)[0]))
         } else if (location.pathname === `/profile/orders/${id}` && userOrders !== undefined) {
-            const ordersArray: any = fullArray(userOrders, data)
-            dispatch(linkOpenInfoOrderAction(ordersArray.filter((e: any) => e._id === id)[0]))
+            const ordersArray: Array<TClickOrder> = fullArray(userOrders, data)
+            dispatch(linkOpenInfoOrderAction(ordersArray.filter((e: TClickOrder) => e._id === id)[0]))
         }
     }, [orders, userOrders])
     return (
@@ -64,7 +64,7 @@ export const OrderInfo: FC = () => {
                     <div className={style.ingred_container}>
                         {order.ingredients.filter(function(o: any, pos: number) {
                             return order.ingredients.indexOf(o) === pos;
-                        }).map((elem: any, index: number) => (
+                        }).map((elem: IIngredient, index: number) => (
                             <OrderIngredient elem={elem} key={index}/>
                         ))}
                     </div>

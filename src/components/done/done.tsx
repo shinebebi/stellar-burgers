@@ -1,13 +1,14 @@
 import React, {FC} from 'react';
 import {useSelector} from '../../utils/hooks'
 import style from "./done.module.css"
+import {IOrders} from "../../utils/types";
 
 export const Done: FC = () => {
     const { orders, total, totalToday } = useSelector(state => state.ws)
     let done: number[] = []
     let a: number[] = []
     // @ts-ignore
-    orders.forEach((o: any) => {
+    orders.forEach((o: IOrders) => {
         if (o.status !== 'done') {
             a.push(o.number)
         } else if (o.status === 'done') {

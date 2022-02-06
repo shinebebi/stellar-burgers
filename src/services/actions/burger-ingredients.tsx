@@ -11,7 +11,7 @@ import {AppDispatch, AppThunk, IIngredient} from "../../utils/types";
 
 export interface IModalOpenAction {
     readonly type: typeof MODAL_INGREDIENT_OPEN;
-    readonly elemInfo: any;
+    readonly elemInfo: IIngredient;
 }
 
 export interface IModalCloseAction {
@@ -44,7 +44,7 @@ export type TIngredientsActions =
     | IGetIngredientsSuccessAction
     | IModalCloseAction;
 
-export const modalOpenAction = (elemInfo: any): IModalOpenAction => ({
+export const modalOpenAction = (elemInfo: IIngredient): IModalOpenAction => ({
     type: MODAL_INGREDIENT_OPEN,
     elemInfo
 });
@@ -53,7 +53,7 @@ export const modalCloseAction = (): IModalCloseAction => ({
     type: MODAL_INGREDIENT_CLOSE
 });
 
-export const linkOpenAction = (elemInfo:any): ILinkOpenAction => ({
+export const linkOpenAction = (elemInfo: IIngredient): ILinkOpenAction => ({
     type: LINK_INGREDIENT_OPEN,
     elemInfo
 });

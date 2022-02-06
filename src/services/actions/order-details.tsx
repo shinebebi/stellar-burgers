@@ -9,6 +9,7 @@ import {
 
 import {IAddBunAction, IAddItemAction, IDeleteItemAction, ISortItemsAction} from "./burger-constructor"
 import {getCookie} from "../utils";
+import {AppDispatch, RootState} from "../../utils/types";
 
 export interface IModalOrderOpenAction {
     readonly type: typeof MODAL_ORDER_OPEN;
@@ -66,7 +67,7 @@ export const getOrderDetailsSuccessAction = (orderNumber: number, orderHeader: s
     orderHeader
 });
 export function getOrderDetails() {
-    return function (dispatch: any, getState: any) {
+    return function (dispatch: AppDispatch, getState: any) {
         const { points } = getState().constructorBurger
         const postIngredients: any = []
         points.forEach((point: {_id: string})  => {

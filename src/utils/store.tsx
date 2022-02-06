@@ -12,8 +12,7 @@ import {
 
 import {getCookie} from "../services/utils";
 
-const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
-const wsUserUrl = `wss://norma.nomoreparties.space/orders?token=${getCookie('token')}`
+const wsUrl = 'wss://norma.nomoreparties.space/orders';
 const wsActions = {
     wsInit: WS_CONNECTION_START,
     onOpen: WS_CONNECTION_SUCCESS,
@@ -23,7 +22,7 @@ const wsActions = {
 };
 
 const wsUserActions = {
-    wsInit: WS_CONNECTION_PROFILE_ORDERS_START,
+    wsUserInit: WS_CONNECTION_PROFILE_ORDERS_START,
     onOpen: WS_CONNECTION_USER_SUCCESS,
     onClose: WS_CONNECTION_USER_CLOSED,
     onError: WS_CONNECTION_USER_ERROR,
@@ -38,5 +37,5 @@ export const initStore = (initialState = {}) =>
     createStore(
         rootReducer,
         initialState,
-        composeEnhancers(applyMiddleware(thunkMiddleware, socketMiddleware(wsUrl, wsActions), socketMiddleware(wsUserUrl, wsUserActions)))
+        composeEnhancers(applyMiddleware(thunkMiddleware, socketMiddleware(wsUrl, wsActions), socketMiddleware(wsUrl, wsUserActions)))
     );

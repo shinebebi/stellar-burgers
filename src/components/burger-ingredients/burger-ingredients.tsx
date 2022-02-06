@@ -5,10 +5,10 @@ import burgerIngredientsStyles from './burger-ingredients.module.css';
 import {useSelector, useDispatch} from '../../utils/hooks'
 import {modalOpenAction} from "../../services/actions/burger-ingredients";
 import {Link} from "react-router-dom";
-import {TElem} from '../../utils/types'
+import {IIngredient, TElem} from '../../utils/types'
 
 type ITypeOfIngredient = {
-    list: any,
+    list: Array<IIngredient>,
     type: string
 };
 const BurgerIngredients: FC<ReactNode> = ({children}) => {
@@ -61,7 +61,7 @@ const BurgerIngredients: FC<ReactNode> = ({children}) => {
         <section>
             <h3 className={`${burgerIngredientsStyles.ingredient_type} text text_type_main-medium`}>{type}</h3>
             <div className={burgerIngredientsStyles.ingredient_container}>
-                {list.map((elem: any) => (
+                {list.map((elem: IIngredient) => (
                     <Ingredient elem={elem} key={elem._id}/>
                 ))}
             </div>
