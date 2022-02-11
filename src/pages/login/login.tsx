@@ -26,13 +26,13 @@ export const LoginPage: FC = () => {
                     password: valuePw
                 }, 'auth/login'))
             }}>
-                <EmailInput onChange={e => setValueEmail(e.target.value)} value={valueEmail} name={'email'} />
+                <EmailInput onChange={e => setValueEmail(e.target.value)} value={valueEmail} name={'email'}/>
                 <PasswordInput
                     onChange={e => setValuePw(e.target.value)}
                     value={valuePw}
                     name={'password'}
                 />
-                <Button type="primary" size="medium">
+                <Button type="primary" size="medium" data-cy='login-btn'>
                     Войти
                 </Button>
             </form>

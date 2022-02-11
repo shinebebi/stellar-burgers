@@ -7,10 +7,10 @@ import {
     WS_CONNECTION_USER_SUCCESS,
     WS_GET_ORDERS,
     WS_GET_USER_ORDERS
-} from '../constants';
+} from '../../constants';
 
-import {TWsActions} from "../actions/ws";
-import {IOrders} from "../../utils/types";
+import {TWsActions} from "../../actions/ws";
+import {IOrders} from "../../../utils/types";
 
 interface IWsState {
     wsConnected: boolean,

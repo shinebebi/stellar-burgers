@@ -39,6 +39,7 @@ const BurgerIngredients: FC<ReactNode> = ({children}) => {
                     onClick={() => dispatch(modalOpenAction(elem))}
                     className={burgerIngredientsStyles.ingredient_section}
                     ref={dragRef}
+                    data-cy={_id}
                 >
                     <div className={burgerIngredientsStyles.ingredient_counter}>
                         {points.indexOf(elem) !== -1 &&

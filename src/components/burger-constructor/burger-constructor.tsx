@@ -26,7 +26,7 @@ export const BurgerConstructor: FunctionComponent<IBurgerConstructor> = ({onDrop
             <Points onDropHandler={onDropHandler}/>
             <div className={burgerConstructorStyles.makeOrder__container}>
                 <FinalAmount/>
-                <Button type="primary" size="large" onClick={() => {
+                <Button type="primary" size="large" data-cy='order-btn' onClick={() => {
                     if (name) {
                         dispatch(modalOrderOpenAction())
                     } else {

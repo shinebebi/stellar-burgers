@@ -99,3 +99,10 @@ export const wsGetUserOrders = (payload: TPayload): IWsGetUserOrders => ({
 export const wsUserConnectionClosed = (): IWsConnectionUserClosed => ({
     type: WS_CONNECTION_USER_CLOSED
 })
+
+export const wsConnectionUserSuccess = (): IWsConnectionUserSuccess => ({
+    type: WS_CONNECTION_USER_SUCCESS
+})
+export const wsConnectionUserError = (): IWsConnectionUserError => ({
+    type: WS_CONNECTION_USER_ERROR
+})

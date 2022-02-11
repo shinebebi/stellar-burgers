@@ -3,8 +3,8 @@ import {
     RESET_PASSWORD,
     POST_LOGOUT_REQUEST, POST_LOGOUT_SUCCESS, POST_LOGOUT_FAILED,
     GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILED
-} from "../constants"
-import {TAuthActions} from "../actions/profile";
+} from "../../constants"
+import {TAuthActions} from "../../actions/profile";
 
 export type TAuthState = {
     name: string,
