@@ -1,7 +1,7 @@
 import {apiNorma, getResponseData} from "./actions";
-import {getCookie, setCookie} from "./utils";
+import {getCookie} from "./utils";
 
-export const emailRequest = (email) => {
+export const emailRequest = (email: string) => {
     return fetch(`${apiNorma}password-reset`, {
         method: 'POST',
         /*mode: 'cors',
@@ -19,7 +19,7 @@ export const emailRequest = (email) => {
         .then(res => getResponseData(res))
 };
 
-export const passwordReset = (password, token) => {
+export const passwordReset = (password: string, token: string) => {
     return fetch(`${apiNorma}password-reset/reset`, {
         method: 'POST',
         headers: {
@@ -46,5 +46,7 @@ export const refreshToken = () => {
         }),
     }).then(getResponseData);
 };
+
+
 
 

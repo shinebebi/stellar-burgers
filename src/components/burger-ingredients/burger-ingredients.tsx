@@ -2,22 +2,22 @@ import React, {FC, ReactNode} from 'react'
 import { useDrag } from "react-dnd";
 import { Counter, CurrencyIcon, Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerIngredientsStyles from './burger-ingredients.module.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { MODAL_INGREDIENT_OPEN } from "../../services/actions/ingredient-details";
+import {useSelector, useDispatch} from '../../utils/hooks'
+import {modalOpenAction} from "../../services/actions/burger-ingredients";
 import {Link} from "react-router-dom";
-import {IIngredient} from '../../utils/types'
+import {IIngredient, TElem} from '../../utils/types'
 
-interface ITypeOfIngredient {
-    list: Array<IIngredient>
+type ITypeOfIngredient = {
+    list: Array<IIngredient>,
     type: string
-}
+};
 const BurgerIngredients: FC<ReactNode> = ({children}) => {
-    const { data, modalIngredientOpen } = useSelector((state: any) => state.ingredients)
-    const { points } = useSelector((state: any) => state.constructorBurger)
+    const { data, modalIngredientOpen } = useSelector((state) => state.ingredients)
+    const { points } = useSelector((state) => state.constructorBurger)
     const sectionRef = React.useRef<any>()
     const dispatch = useDispatch()
 
-    const Ingredient: FC<IIngredient> = ({elem}) => {
+    const Ingredient: FC<TElem> = ({elem}) => {
         const { _id, type } = elem
         const [, dragRef] = useDrag({
             type: 'products',
@@ -36,13 +36,13 @@ const BurgerIngredients: FC<ReactNode> = ({children}) => {
         return (
             <Link to={{ pathname: `/ingredients/${_id}`}} className={burgerIngredientsStyles.link}>
                 <div
-                    onClick={() => dispatch({type: MODAL_INGREDIENT_OPEN, elemInfo: elem})}
+                    onClick={() => dispatch(modalOpenAction(elem))}
                     className={burgerIngredientsStyles.ingredient_section}
                     ref={dragRef}
                 >
                     <div className={burgerIngredientsStyles.ingredient_counter}>
                         {points.indexOf(elem) !== -1 &&
-                        <Counter count={fnc(elem)} size="default"/>
+                            <Counter count={fnc(elem)} size="default"/>
                         }
                     </div>
                     <img src={elem.image} className={burgerIngredientsStyles.ingredient_photo} alt={elem.name}/>
@@ -61,7 +61,7 @@ const BurgerIngredients: FC<ReactNode> = ({children}) => {
         <section>
             <h3 className={`${burgerIngredientsStyles.ingredient_type} text text_type_main-medium`}>{type}</h3>
             <div className={burgerIngredientsStyles.ingredient_container}>
-                {list.map((elem: any) => (
+                {list.map((elem: IIngredient) => (
                     <Ingredient elem={elem} key={elem._id}/>
                 ))}
             </div>
@@ -99,14 +99,15 @@ const BurgerIngredients: FC<ReactNode> = ({children}) => {
             </div>
         )
     }
+    // @ts-ignore
     return (
         <section className={burgerIngredientsStyles.windowIngredients}>
             <h2 className={`text text_type_main-large ${burgerIngredientsStyles.constructor__header}`}>Соберите бургер</h2>
             <TabElement/>
             <section className={burgerIngredientsStyles.ingredients_section} ref={sectionRef}>
-                <TypeOfIngredient list={data.filter((e: ITypeOfIngredient) => e.type === "bun")} type="Булки"/>
-                <TypeOfIngredient list={data.filter((e: ITypeOfIngredient) => e.type === "sauce")} type="Соусы"/>
-                <TypeOfIngredient list={data.filter((e: ITypeOfIngredient) => e.type === "main")} type="Начинки"/>
+                <TypeOfIngredient list={data.filter((e) => e.type === "bun")} type="Булки"/>
+                <TypeOfIngredient list={data.filter((e) => e.type === "sauce")} type="Соусы"/>
+                <TypeOfIngredient list={data.filter((e) => e.type === "main")} type="Начинки"/>
             </section>
             {modalIngredientOpen && children}
         </section>

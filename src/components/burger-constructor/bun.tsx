@@ -1,8 +1,10 @@
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {FunctionComponent} from 'react'
-import {IIngredient} from "../../utils/types";
-type TBunProps = IIngredient & {
+import {TElem} from "../../utils/types";
+
+
+type TBunProps = TElem & {
     type?: 'top' | 'bottom';
     direction: string;
 };

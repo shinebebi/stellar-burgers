@@ -1,41 +1,20 @@
 import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import styles from "./profile.module.css"
-import {useDispatch, useSelector} from "react-redux";
-import {postLogout} from "../../services/actions/logout";
+import {useSelector, useDispatch} from '../../utils/hooks'
 import {Navigate} from "react-router-dom";
 import {patchUserInfo} from "../../services/actions/profile";
 import {FC} from "react";
+import {ProfileTab} from "../../components/profile-tab/profile-tab";
 
 export const ProfilePage: FC = () => {
-    const { name, hasError, isLoading, email } = useSelector((state: any) => state.auth)
-    const [profileBtn, setProfileBtn] = React.useState<boolean>(true)
+    const { name, hasError, isLoading, email } = useSelector((state) => state.auth)
     const [valueEmail, setValueEmail] = React.useState<string>(email)
     const [valueName, setValueName] = React.useState<string>(name)
     const [valuePw, setValuePw] = React.useState<string>('')
-    const [historyBtn, setHistoryBtn] = React.useState<boolean>(false)
-    const [logoutBtn, setLogoutBtn] = React.useState<boolean>(false)
     const dispatch = useDispatch()
     const inputNameRef = React.useRef<any>(null)
     const inputPwRef = React.useRef<any>(null)
-    const typographyActive: string = `text text_type_main-medium ${styles.btnActive}`
-    const typographyInActive: string = `text text_type_main-medium ${styles.btnInactive}`
-    const updateClickBtn = (btn: string) => {
-        if (btn === 'profile') {
-            setProfileBtn(true)
-            setHistoryBtn(false)
-            setLogoutBtn(false)
-        } else if (btn === 'history') {
-            setProfileBtn(false)
-            setHistoryBtn(true)
-            setLogoutBtn(false)
-        } else {
-            setProfileBtn(false)
-            setHistoryBtn(false)
-            setLogoutBtn(true)
-            dispatch(postLogout())
-        }
-    }
     if (!hasError && !isLoading && !name) {
         return (
             <Navigate to="/login"/>
@@ -43,17 +22,7 @@ export const ProfilePage: FC = () => {
     }
     return (
         <section className={styles.container}>
-            <div className={styles.navContainer}>
-                <div className={styles.navBar}>
-                    <button onClick={() => updateClickBtn('profile')} className={`${styles.btn} ${profileBtn ? typographyActive : typographyInActive}`}>Профиль</button>
-                    <button onClick={() => updateClickBtn('history')} className={`${styles.btn} ${historyBtn ? typographyActive : typographyInActive}`}>История заказов</button>
-                    <button onClick={() => updateClickBtn('logout')} className={`${styles.btn} ${logoutBtn ? typographyActive : typographyInActive}`}>Выход</button>
-                </div>
-                <p className='text text_type_main-default text_color_inactive'>
-                    В этом разделе вы можете
-                    изменить свои персональные данные
-                </p>
-            </div>
+            <ProfileTab text='В этом разделе вы можете изменить свои персональные данные' btn='profile'/>
             <div className={styles.inputContainer}>
                 <Input
                     type='text'

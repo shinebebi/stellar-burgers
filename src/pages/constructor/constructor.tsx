@@ -1,12 +1,12 @@
 import React, {FC, ReactNode} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import {useSelector, useDispatch} from '../../utils/hooks'
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import constructorStyles from "./constructor.module.css"
-import { ADD_ITEM, ADD_BUN } from "../../services/actions/burger-constructor";
+import {addItemAction, addBunAction} from "../../services/actions/burger-constructor";
+
 interface IBunObj {
     type: string
     _id: string
@@ -16,8 +16,8 @@ export interface IItemIdd {
     _id: string
 }
 export const ConstructorPage: FC<ReactNode> = ({children}) => {
-    const { data, isLoading, hasError } = useSelector((state: any) => state.ingredients);
-    const { points } = useSelector((state: any) => state.constructorBurger)
+    const { data, isLoading, hasError } = useSelector((state) => state.ingredients);
+    const { points } = useSelector((state) => state.constructorBurger)
     const dispatch = useDispatch();
     const handleDrop = (itemId: IItemIdd) => {
         const prevBunObj = points.filter((e: IBunObj) => e.type === 'bun')[0]
@@ -32,15 +32,11 @@ export const ConstructorPage: FC<ReactNode> = ({children}) => {
             } else {
                 price = dataFilter().price * 2
             }
-            dispatch({type: ADD_ITEM, points: points, price: price})
+            dispatch(addItemAction(points, price))
         } else {
             const bunIndex = points.indexOf(prevBunObj)
             points[bunIndex] = dataFilter()
-            dispatch({type: ADD_BUN,
-                points: points,
-                currentBun: dataFilter().price * 2,
-                prevBun: prevBunObj.price * 2
-            })
+            dispatch(addBunAction(points, prevBunObj.price * 2, dataFilter().price * 2))
         }
     };
     return (

@@ -6,11 +6,8 @@ import burgerConstructorStyles from './burger-constructor.module.css';
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 import {FinalAmount} from "./final-amount";
-import { useSelector, useDispatch } from 'react-redux';
-import {
-    MODAL_ORDER_OPEN,
-    MODAL_ORDER_CLOSE
-} from "../../services/actions/order-details";
+import {useSelector, useDispatch} from '../../utils/hooks'
+import {modalOrderOpenAction, modalOrderCloseAction} from "../../services/actions/order-details";
 import {Points} from "./points";
 import {useNavigate} from "react-router-dom";
 import {IItemIdd} from "../../pages/constructor/constructor";
@@ -21,8 +18,8 @@ export interface IBurgerConstructor {
 
 export const BurgerConstructor: FunctionComponent<IBurgerConstructor> = ({onDropHandler}) => {
     const dispatch = useDispatch()
-    const { modalOrderOpen } = useSelector((state: any) => state.constructorBurger)
-    const { name } = useSelector((state: any) => state.auth)
+    const { modalOrderOpen } = useSelector((state) => state.constructorBurger)
+    const { name } = useSelector((state) => state.auth)
     const navigate = useNavigate()
     return (
         <section className={burgerConstructorStyles.windowConstructor}>
@@ -31,7 +28,7 @@ export const BurgerConstructor: FunctionComponent<IBurgerConstructor> = ({onDrop
                 <FinalAmount/>
                 <Button type="primary" size="large" onClick={() => {
                     if (name) {
-                        dispatch({type: MODAL_ORDER_OPEN})
+                        dispatch(modalOrderOpenAction())
                     } else {
                         navigate('/login')
                     }
@@ -40,7 +37,7 @@ export const BurgerConstructor: FunctionComponent<IBurgerConstructor> = ({onDrop
                 </Button>
                 {modalOrderOpen &&
                     <Modal header='' onClose={() => {
-                        dispatch({type: MODAL_ORDER_CLOSE})
+                        dispatch(modalOrderCloseAction())
                         navigate('/')
                     }}>
                         <OrderDetails/>

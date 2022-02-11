@@ -2,41 +2,66 @@ import { combineReducers } from 'redux'
 
 import { authReducer } from "./auth";
 
+import {feedReducer} from "./feed";
+
+import {wsReducer} from "./ws";
+
+import {TIngredientsActions} from "../actions/burger-ingredients";
+
 import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
-    GET_INGREDIENTS_FAILED
-} from '../actions/burger-ingredients'
-import {
+    GET_INGREDIENTS_FAILED,
     MODAL_INGREDIENT_OPEN,
-    MODAL_INGREDIENT_CLOSE, LINK_INGREDIENT_OPEN
-} from '../actions/ingredient-details'
-import {
+    MODAL_INGREDIENT_CLOSE,
+    LINK_INGREDIENT_OPEN,
     MODAL_ORDER_OPEN,
     MODAL_ORDER_CLOSE,
     GET_ORDER_DETAILS_SUCCESS,
     GET_ORDER_DETAILS_REQUEST,
-    GET_ORDER_DETAILS_FAILED
-} from "../actions/order-details";
-import {
+    GET_ORDER_DETAILS_FAILED,
     DELETE_ITEM,
     ADD_ITEM,
-    ADD_BUN, SORT_ITEMS
-} from "../actions/burger-constructor";
+    ADD_BUN,
+    SORT_ITEMS
+} from '../constants'
+import {IIngredient} from "../../utils/types";
+import {TConstructorActions} from "../actions/order-details";
 
-const initialStateIngredient = {
+export type TIngredientState = {
+    isLoading: boolean,
+    hasError: boolean,
+    data: Array<IIngredient>,
+
+    modalIngredientOpen: boolean,
+    ingredientDetails?: IIngredient,
+    linkIngredientOpen: boolean
+}
+
+const initialStateIngredient: TIngredientState = {
     isLoading: false,
     hasError: false,
     data: [],
 
     modalIngredientOpen: false,
-    ingredientDetails: {},
+    ingredientDetails: undefined,
     linkIngredientOpen: false
 }
 
-const initialStateConstructor = {
+export type TConstructorState = {
+    modalOrderOpen: boolean,
+    orderNumber: number,
+    orderHeader: string,
+    isLoading: boolean,
+    hasError: boolean,
+
+    points: Array<IIngredient>,
+    finalAmount: number
+}
+
+const initialStateConstructor: TConstructorState = {
     modalOrderOpen: false,
-    orderNumber: null,
+    orderNumber: 0,
     orderHeader: '',
     isLoading: false,
     hasError: false,
@@ -45,7 +70,7 @@ const initialStateConstructor = {
     finalAmount: 0
 }
 
-export const ingredientsReducer = (state = initialStateIngredient, action) => {
+export const ingredientsReducer = (state = initialStateIngredient, action: TIngredientsActions): TIngredientState => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST: {
             return {
@@ -79,7 +104,8 @@ export const ingredientsReducer = (state = initialStateIngredient, action) => {
             return {
                 ...state,
                 modalIngredientOpen: false,
-                ingredientDetails: {}
+                // @ts-ignore
+                ingredientDetails: undefined
             }
         }
         case LINK_INGREDIENT_OPEN: {
@@ -95,7 +121,7 @@ export const ingredientsReducer = (state = initialStateIngredient, action) => {
     }
 }
 
-export const constructorReducer = (state = initialStateConstructor, action) => {
+export const constructorReducer = (state = initialStateConstructor, action: TConstructorActions): TConstructorState => {
     switch (action.type) {
         case MODAL_ORDER_OPEN: {
             return {
@@ -107,7 +133,7 @@ export const constructorReducer = (state = initialStateConstructor, action) => {
             return {
                 ...state,
                 modalOrderOpen: false,
-                orderNumber: null,
+                orderNumber: 0,
                 orderHeader: '',
                 isLoading: false,
                 hasError: false
@@ -174,5 +200,7 @@ export const constructorReducer = (state = initialStateConstructor, action) => {
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,
     constructorBurger: constructorReducer,
-    auth: authReducer
+    auth: authReducer,
+    feed: feedReducer,
+    ws: wsReducer
 });

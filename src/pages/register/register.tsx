@@ -3,11 +3,11 @@ import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-deve
 import React, {FC} from "react";
 import {Navigate, useNavigate} from 'react-router-dom';
 import {signIn} from "../../services/actions/login";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector, useDispatch} from '../../utils/hooks'
 
 export const RegisterPage: FC = () => {
     const navigate = useNavigate();
-    const { hasError, name } = useSelector((state: any) => state.auth)
+    const { hasError, name } = useSelector((state) => state.auth)
     const dispatch = useDispatch()
     const [valueEmail, setValueEmail] = React.useState<string>('')
     const [valueName, setValueName] = React.useState<string>('')

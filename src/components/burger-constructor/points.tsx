@@ -3,17 +3,16 @@ import burgerConstructorStyles from "./burger-constructor.module.css";
 import React, {FC} from "react";
 import { Bun } from './bun'
 import {Item} from "./item";
-import { SORT_ITEMS } from "../../services/actions/burger-constructor";
+import {sortItemItemAction} from "../../services/actions/burger-constructor";
 import {HTML5Backend} from "react-dnd-html5-backend";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector, useDispatch} from '../../utils/hooks'
 import {IBurgerConstructor} from './burger-constructor'
 import {IItemIdd} from '../../pages/constructor/constructor'
-interface IMapPoints {
-    e: { type: string, _id: string }
-}
+import {IIngredient} from "../../utils/types";
+
 export const Points: FC<IBurgerConstructor> = ({onDropHandler}) => {
     const dispatch = useDispatch()
-    const { points } = useSelector((state: any) => state.constructorBurger)
+    const { points } = useSelector((state) => state.constructorBurger)
     const [, dropTarget] = useDrop({
         accept: 'products',
         drop(itemId: IItemIdd) {
@@ -36,7 +35,8 @@ export const Points: FC<IBurgerConstructor> = ({onDropHandler}) => {
                 {!points.length
                     ? <p className="text text_type_main-default text_color_inactive">Перенесите сюда ингредиенты</p>
                     : <section className={burgerConstructorStyles.constructor_mains}>
-                        {points.map(function (e: { type: string, _id: string }, index: number) {
+                        {points.map(function (e: IIngredient, index: number) {
+                            // @ts-ignore
                             return (e.type !== 'bun') &&
                                 // @ts-ignore
                                 <Item elem={e} key={e._id} index={index} moveItem={(dragIndex, hoverIndex) => {
@@ -45,9 +45,10 @@ export const Points: FC<IBurgerConstructor> = ({onDropHandler}) => {
                                     points.splice(hoverIndex, 0, dragItem)*/
                                     points.splice(hoverIndex, 0, points.splice(dragIndex, 1)[0]);
                                     const uniqueArray = points.filter(function(item: object, pos: number) {
+                                        // @ts-ignore
                                         return points.indexOf(item) === pos;
                                     })
-                                    dispatch({type: SORT_ITEMS, points: uniqueArray})
+                                    dispatch(sortItemItemAction(uniqueArray))
                                 }
                                 }/>
                         })}
