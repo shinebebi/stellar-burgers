@@ -40,7 +40,7 @@ export const ConstructorPage: FC<ReactNode> = ({children}) => {
         }
     };
     return (
-        <div className={constructorStyles.main}>
+        <div className={constructorStyles.main} data-cy='constructor-page'>
             {isLoading && 'Загрузка...'}
             {hasError && 'Произошла ошибка'}
             {!isLoading && !hasError && data.length &&

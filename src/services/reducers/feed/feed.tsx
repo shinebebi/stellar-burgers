@@ -5,9 +5,9 @@ import {
     MODAL_INFO_ORDER_CLOSE,
     MODAL_INFO_ORDER_OPEN,
     LINK_OPEN_INFO_ORDER
-} from "../constants";
-import { TClickOrder } from "../../utils/types";
-import {TOrdersActions} from "../actions/feed";
+} from "../../constants";
+import { TClickOrder } from "../../../utils/types";
+import {TOrdersActions} from "../../actions/feed";
 
 export type TFeedState = {
     order?: TClickOrder,

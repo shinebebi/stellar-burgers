@@ -29,7 +29,7 @@ export const Points: FC<IBurgerConstructor> = ({onDropHandler}) => {
         }
     }
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', height: 650}} ref={dropTarget}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', height: 650}} ref={dropTarget} data-cy={'dropField'}>
             {setBun('top', 'верх')}
             <DndProvider backend={HTML5Backend}>
                 {!points.length

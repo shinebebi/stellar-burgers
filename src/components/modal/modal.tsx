@@ -41,7 +41,7 @@ const Modal: FC<IModal> = ({header, onClose, children}) => {
             <div className={modalStyles.popup} ref={popupRef}>
                 <div className={modalStyles.default__section}>
                     <h2 className={`text text_type_main-medium ${modalStyles.header}`}>{header}</h2>
-                    <button onClick={onClose} className={modalStyles.close_button}>
+                    <button onClick={onClose} className={modalStyles.close_button} data-cy='close-btn'>
                         <CloseIcon type='primary'/>
                     </button>
                 </div>
